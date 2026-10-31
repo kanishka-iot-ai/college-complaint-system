@@ -1,0 +1,211 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistical ATR Reports - Admin Console</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">
+</head>
+<body>
+
+    <nav class="navbar" style="border-bottom: 2px solid #0d9488;">
+        <a href="${pageContext.request.contextPath}/admin/dashboard" class="navbar-brand">
+            <span class="brand-icon"><img src="${pageContext.request.contextPath}/images/cu_logo.png" alt="CU Logo"></span>
+            <span>Admin Console</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-size: 0.95rem; color: var(--slate);">
+                Logged as: <strong>${sessionScope.loggedAdmin.name}</strong>
+            </span>
+            <a href="${pageContext.request.contextPath}/logout" class="btn btn-outline btn-sm">Sign Out</a>
+        </div>
+    </nav>
+
+    <div class="app-layout">
+        <aside class="sidebar admin-sidebar">
+            <div>
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Grievance Cell</div>
+                    <div class="sidebar-user">
+                        <img src="${pageContext.request.contextPath}/images/cu_logo.png" alt="CU Logo" class="sidebar-user-logo">
+                        <span>${sessionScope.loggedAdmin.name}</span>
+                    </div>
+                </div>
+
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item">
+                        <a href="${pageContext.request.contextPath}/admin/dashboard">
+                            <svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="${pageContext.request.contextPath}/admin/allComplaints">
+                            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                            <span>Grievance Dossiers</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="${pageContext.request.contextPath}/admin/studentManagement">
+                            <svg class="ui-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <span>Student Registry</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item active">
+                        <a href="${pageContext.request.contextPath}/admin/reports">
+                            <svg class="ui-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                            <span>Statistical ATR Reports</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="${pageContext.request.contextPath}/logout" class="btn btn-outline btn-sm" style="width: 100%; color: #cbd5e1; border-color: rgba(255,255,255,0.2);">
+                    <svg class="ui-icon-sm" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span>Sign Out</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <nav class="breadcrumb-container" aria-label="Breadcrumb" style="margin: -1.25rem -1rem 1.25rem -1rem; padding: 0.75rem 1.25rem;">
+                <ol class="breadcrumb-list">
+                    <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/dashboard">Admin Console</a></li>
+                    <li class="breadcrumb-separator">/</li>
+                    <li class="breadcrumb-item active" aria-current="page">Statistical ATR Reports</li>
+                </ol>
+            </nav>
+
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Statistical ATR &amp; Redressal Metrics</h1>
+                    <p class="page-subtitle">Statutory Action Taken Report (ATR) analytics, resolution performance, and category distribution.</p>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline" onclick="window.print();">
+                        <svg class="ui-icon-sm" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                        Print Official Audit Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resolution KPI Highlights -->
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-info">
+                        <h3>Total Filed Grievances</h3>
+                        <div class="stat-value">${totalComplaints}</div>
+                    </div>
+                    <div class="stat-icon">
+                        <svg class="ui-icon-lg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    </div>
+                </div>
+
+                <div class="stat-card green">
+                    <div class="stat-info">
+                        <h3>Resolved &amp; Disposed</h3>
+                        <div class="stat-value">${stats.resolved}</div>
+                    </div>
+                    <div class="stat-icon">
+                        <svg class="ui-icon-lg" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                </div>
+
+                <div class="stat-card orange">
+                    <div class="stat-info">
+                        <h3>Active Inquiries</h3>
+                        <div class="stat-value">${stats.pending + stats.inProgress}</div>
+                    </div>
+                    <div class="stat-icon">
+                        <svg class="ui-icon-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                </div>
+
+                <div class="stat-card" style="border-left: 4px solid #0d9488;">
+                    <div class="stat-info">
+                        <h3>ATR Disposal Efficiency</h3>
+                        <div class="stat-value">
+                            <c:choose>
+                                <c:when test="${totalComplaints > 0}">
+                                    <fmt:formatNumber value="${(stats.resolved * 100.0) / totalComplaints}" maxFractionDigits="1"/>%
+                                </c:when>
+                                <c:otherwise>0.0%</c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+                    <div class="stat-icon">
+                        <svg class="ui-icon-lg" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Bar Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Academic &amp; Infrastructure Domain Distribution</h2>
+                </div>
+                <div class="card-body">
+                    <canvas id="categoryChart" width="800" height="320" style="max-width: 100%; height: auto;"></canvas>
+                </div>
+            </div>
+
+            <!-- Category Breakdown Table -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Category Distribution Summary Register</h2>
+                </div>
+                <div class="card-body" style="padding: 0;">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Domain Category</th>
+                                    <th>Registered Dossiers</th>
+                                    <th>Percentage Share</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="entry" items="${categoryStats}">
+                                    <tr>
+                                        <td><strong>${entry[0]}</strong></td>
+                                        <td><span class="badge" style="background: #f1f5f9; color: var(--slate); font-size: 0.95rem;">${entry[1]} ${entry[1] == 1 ? 'Dossier' : 'Dossiers'}</span></td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${totalComplaints > 0}">
+                                                    <fmt:formatNumber value="${(entry[1] * 100.0) / totalComplaints}" maxFractionDigits="1"/>%
+                                                </c:when>
+                                                <c:otherwise>0.0%</c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="${pageContext.request.contextPath}/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const labels = [];
+            const data = [];
+            <c:forEach var="entry" items="${categoryStats}">
+                labels.push("${entry[0]}");
+                data.push(${entry[1]});
+            </c:forEach>
+            if (typeof drawCategoryChart === 'function') {
+                drawCategoryChart('categoryChart', labels, data);
+            }
+        });
+    </script>
+</body>
+</html>

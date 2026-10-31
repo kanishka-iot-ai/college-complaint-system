@@ -1,0 +1,674 @@
+/* ==========================================================================
+   admin.css — Admin-Specific Styles
+   College Complaint Management System
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. SIDEBAR OVERRIDE — Darker Navy for Admin
+   -------------------------------------------------------------------------- */
+.sidebar {
+    background: linear-gradient(180deg, #0d1433 0%, #0a1128 40%, #060b1a 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar .sidebar-brand {
+    background: rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar .sidebar-brand h4 {
+    color: #e8eaf6;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+.sidebar .nav-link {
+    color: #b0bec5;
+    border-radius: 6px;
+    margin: 2px 8px;
+    padding: 10px 14px;
+    transition: background 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+}
+
+.sidebar .nav-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e8eaf6;
+    padding-left: 20px;
+}
+
+.sidebar .nav-link.active {
+    background: linear-gradient(90deg, #1a237e, #283593);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(26, 35, 126, 0.4);
+}
+
+.sidebar .nav-link .nav-icon {
+    margin-right: 10px;
+    width: 18px;
+    text-align: center;
+    opacity: 0.85;
+}
+
+.sidebar-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    margin: 10px 16px;
+}
+
+/* --------------------------------------------------------------------------
+   2. ADMIN BADGE — Navbar
+   -------------------------------------------------------------------------- */
+.admin-badge {
+    display: inline-flex;
+    align-items: center;
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border-left: 3px solid #c5a880;
+    margin-left: 8px;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.admin-badge::before {
+    content: none !important;
+}
+
+.navbar-admin .navbar-brand {
+    font-weight: 700;
+    color: #1a237e;
+    letter-spacing: 0.3px;
+}
+
+.navbar-admin .navbar-text {
+    color: #455a64;
+    font-size: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   3. ADMIN ACTION PANEL — highlighted border-left card
+   -------------------------------------------------------------------------- */
+.admin-action-panel {
+    border-left: 4px solid #00897b; /* teal */
+    background: #e0f7fa;            /* light blue tint */
+    border-radius: 0 8px 8px 0;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 137, 123, 0.12);
+    transition: box-shadow 0.2s ease;
+}
+
+.admin-action-panel:hover {
+    box-shadow: 0 4px 16px rgba(0, 137, 123, 0.2);
+}
+
+.admin-action-panel .panel-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #00695c;
+    margin: 0 0 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-action-panel .panel-title::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00897b;
+}
+
+.admin-action-panel .panel-body {
+    font-size: 14px;
+    color: #37474f;
+    line-height: 1.6;
+}
+
+.admin-action-panel .panel-actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Variant panels */
+.admin-action-panel.danger {
+    border-left-color: #c62828;
+    background: #fff3f3;
+}
+
+.admin-action-panel.danger .panel-title { color: #b71c1c; }
+.admin-action-panel.danger .panel-title::before { background: #c62828; }
+
+.admin-action-panel.warning {
+    border-left-color: #f57f17;
+    background: #fffde7;
+}
+
+.admin-action-panel.warning .panel-title { color: #e65100; }
+.admin-action-panel.warning .panel-title::before { background: #f57f17; }
+
+.admin-action-panel.info {
+    border-left-color: #1565c0;
+    background: #e3f2fd;
+}
+
+.admin-action-panel.info .panel-title { color: #0d47a1; }
+.admin-action-panel.info .panel-title::before { background: #1565c0; }
+
+/* --------------------------------------------------------------------------
+   4. STATUS UPDATE FORM — Styled Select and Submit
+   -------------------------------------------------------------------------- */
+.status-update-form {
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 24px;
+}
+
+.status-update-form .form-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #212121;
+    margin: 0 0 16px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-update-form select.status-select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #b0bec5;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    background: #ffffff;
+    color: #212121;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23607d8b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 38px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.status-update-form select.status-select:focus {
+    outline: none;
+    border-color: #1a237e;
+    box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.15);
+}
+
+/* Status color coding on select */
+.status-update-form select.status-select option[value="Pending"]    { color: #e65100; }
+.status-update-form select.status-select option[value="InProgress"] { color: #1565c0; }
+.status-update-form select.status-select option[value="Resolved"]   { color: #2e7d32; }
+.status-update-form select.status-select option[value="Rejected"]   { color: #b71c1c; }
+.status-update-form select.status-select option[value="Closed"]     { color: #546e7a; }
+
+.status-update-form .remarks-field {
+    margin-top: 14px;
+}
+
+.status-update-form .remarks-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #546e7a;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.status-update-form .remarks-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    border: 2px solid #b0bec5;
+    border-radius: 7px;
+    font-size: 14px;
+    color: #212121;
+    resize: vertical;
+    min-height: 90px;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.status-update-form .remarks-field textarea:focus {
+    outline: none;
+    border-color: #1a237e;
+    box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.12);
+}
+
+.status-hint {
+    font-size: 12px;
+    color: #78909c;
+    margin-top: 5px;
+    font-style: italic;
+    min-height: 16px;
+    transition: color 0.2s ease;
+}
+
+.status-hint.hint-warning { color: #e65100; }
+.status-hint.hint-success { color: #2e7d32; }
+.status-hint.hint-danger  { color: #b71c1c; }
+
+.btn-update-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #1a237e, #1565c0);
+    color: #ffffff;
+    border: none;
+    padding: 11px 26px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 16px;
+    letter-spacing: 0.3px;
+    box-shadow: 0 3px 10px rgba(26, 35, 126, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-update-status:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(26, 35, 126, 0.4);
+}
+
+.btn-update-status:active {
+    transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   5. REPORTS PAGE — Chart Container
+   -------------------------------------------------------------------------- */
+.chart-container {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.chart-container .chart-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #212121;
+    margin: 0 0 20px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chart-container canvas {
+    display: block;
+    width: 100% !important;
+    max-height: 350px;
+}
+
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid #f5f5f5;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #546e7a;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.report-summary-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.summary-card {
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.summary-card .summary-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1a237e;
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.summary-card .summary-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #78909c;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+/* --------------------------------------------------------------------------
+   6. STUDENT MANAGEMENT TABLE — Alternating Row Colors
+   -------------------------------------------------------------------------- */
+.admin-student-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+.admin-student-table thead tr {
+    background: linear-gradient(90deg, #1a237e, #283593);
+    color: #ffffff;
+}
+
+.admin-student-table thead th {
+    padding: 13px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    white-space: nowrap;
+    border: none;
+}
+
+.admin-student-table thead th:first-child { border-radius: 10px 0 0 0; }
+.admin-student-table thead th:last-child  { border-radius: 0 10px 0 0; }
+
+.admin-student-table tbody tr:nth-child(odd) {
+    background: #ffffff;
+}
+
+.admin-student-table tbody tr:nth-child(even) {
+    background: #f3f4f8; /* subtle blue tint alternating */
+}
+
+.admin-student-table tbody tr:hover {
+    background: #e8eaf6;
+    transition: background 0.15s ease;
+}
+
+.admin-student-table tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eeeeee;
+    color: #37474f;
+    vertical-align: middle;
+}
+
+.admin-student-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Student status badges within table */
+.student-status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.student-status-badge.active   { background: #e8f5e9; color: #2e7d32; }
+.student-status-badge.inactive { background: #fce4ec; color: #c62828; }
+
+/* Action buttons in table */
+.table-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    margin: 0 2px;
+}
+
+.table-action-btn:hover { opacity: 0.85; text-decoration: none; }
+
+.table-action-btn.view     { background: #e3f2fd; color: #1565c0; }
+.table-action-btn.edit     { background: #fff3e0; color: #e65100; }
+.table-action-btn.deactivate { background: #fce4ec; color: #c62828; }
+
+/* --------------------------------------------------------------------------
+   7. COMPLAINT STATUS BADGES (shared admin usage)
+   -------------------------------------------------------------------------- */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.status-badge.pending     { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+.status-badge.in-progress { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+.status-badge.resolved    { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+.status-badge.rejected    { background: #fce4ec; color: #b71c1c; border: 1px solid #ef9a9a; }
+.status-badge.closed      { background: #eceff1; color: #546e7a; border: 1px solid #b0bec5; }
+
+/* --------------------------------------------------------------------------
+   8. ADMIN DASHBOARD — Stat Cards
+   -------------------------------------------------------------------------- */
+.admin-stat-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 22px 20px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+    border: 1px solid #f0f0f0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.admin-stat-card .stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.admin-stat-card .stat-icon.blue  { background: #e3f2fd; }
+.admin-stat-card .stat-icon.green { background: #e8f5e9; }
+.admin-stat-card .stat-icon.red   { background: #fce4ec; }
+.admin-stat-card .stat-icon.amber { background: #fff8e1; }
+.admin-stat-card .stat-icon.teal  { background: #e0f2f1; }
+
+.admin-stat-card .stat-info .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: #212121;
+    display: block;
+    line-height: 1;
+}
+
+.admin-stat-card .stat-info .stat-label {
+    font-size: 13px;
+    color: #78909c;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   9. FILTER BAR — Admin Complaint List
+   -------------------------------------------------------------------------- */
+.admin-filter-bar {
+    background: #f5f6fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.admin-filter-bar .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    min-width: 140px;
+}
+
+.admin-filter-bar .filter-group label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #78909c;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.admin-filter-bar select,
+.admin-filter-bar input[type="text"],
+.admin-filter-bar input[type="date"] {
+    padding: 8px 12px;
+    border: 1px solid #cfd8dc;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #212121;
+    background: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.admin-filter-bar select:focus,
+.admin-filter-bar input:focus {
+    outline: none;
+    border-color: #1a237e;
+    box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.1);
+}
+
+.admin-filter-bar .filter-actions {
+    display: flex;
+    gap: 8px;
+    padding-bottom: 1px;
+}
+
+.btn-filter-apply {
+    padding: 8px 20px;
+    background: #1a237e;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+}
+
+.btn-filter-apply:hover { background: #283593; }
+
+.btn-filter-reset {
+    padding: 8px 16px;
+    background: transparent;
+    color: #546e7a;
+    border: 1px solid #b0bec5;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-filter-reset:hover {
+    background: #eceff1;
+    color: #37474f;
+}
+
+/* --------------------------------------------------------------------------
+   10. RESPONSIVE ADJUSTMENTS
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .admin-filter-bar {
+        flex-direction: column;
+    }
+
+    .admin-filter-bar .filter-group {
+        min-width: 100%;
+    }
+
+    .report-summary-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-student-table {
+        font-size: 12px;
+    }
+
+    .admin-student-table thead th,
+    .admin-student-table tbody td {
+        padding: 10px 10px;
+    }
+
+    .status-update-form {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .report-summary-row {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-container {
+        padding: 16px;
+    }
+}

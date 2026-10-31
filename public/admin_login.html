@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Login - College Complaint System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); min-height: 100vh;">
+
+    <div class="auth-wrapper">
+        <div class="auth-card" style="border-top: 5px solid #0d9488;">
+            <div class="auth-header">
+                <img src="/images/cu_logo.png" alt="CU Logo" class="brand-logo-card">
+                <h1>Admin Portal</h1>
+                <p>Authorized Administrative Personnel Only</p>
+            </div>
+
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="email">Admin Email</label>
+                    <input type="email" id="email" class="form-control" value="admin@college.edu" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Security Password</label>
+                    <input type="password" id="password" class="form-control" value="Admin@123" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.85rem; background: #0d9488; border-color: #0d9488;">
+                    Enter Admin Console &rarr;
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p style="font-size: 0.85rem; color: #94a3b8;">
+                    Demo Account: <strong>admin@college.edu</strong> / <strong>Admin@123</strong>
+                </p>
+                <div style="margin-top: 1rem;">
+                    <a href="/login.html" style="color: #64748b; font-size: 0.85rem;">
+                        &larr; Switch to Student Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            window.location.href = '/admin_dashboard.html';
+        }
+    </script>
+</body>
+</html>

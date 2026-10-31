@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Complaints - Admin Console</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+    <nav class="navbar" style="border-bottom: 2px solid #0d9488;">
+        <a href="/admin_dashboard.html" class="navbar-brand">
+            <span class="brand-icon"><img src="/images/cu_logo.png" alt="CU Logo"></span>
+            <span>Admin Console</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-size: 0.95rem; color: var(--slate);">Logged as: <strong>Super Admin</strong></span>
+            <a href="/admin_login.html" class="btn btn-outline btn-sm">Sign Out</a>
+        </div>
+    </nav>
+
+    <div class="app-layout">
+        <aside class="sidebar admin-sidebar">
+            <div>
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Grievance Cell</div>
+                    <div class="sidebar-user"><img src="/images/cu_logo.png" alt="CU Logo" class="sidebar-user-logo"><span>Member Secretary, GRC</span></div>
+                </div>
+
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item"><a href="/admin_dashboard.html"><svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg> Dashboard</a></li>
+                    <li class="sidebar-item active"><a href="/admin_all_complaints.html"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Grievance Dossiers</a></li>
+                    <li class="sidebar-item"><a href="/admin_students.html"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Student Registry</a></li>
+                    <li class="sidebar-item"><a href="/admin_reports.html"><svg class="ui-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Statistical ATR Reports</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="/admin_login.html" class="btn btn-outline btn-sm" style="width: 100%; color: #cbd5e1; border-color: rgba(255,255,255,0.2);"><svg class="ui-icon-sm" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Sign Out</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <nav class="breadcrumb-container" aria-label="Breadcrumb" style="margin: -1.25rem -1rem 1.25rem -1rem; padding: 0.75rem 1.25rem;">
+                <ol class="breadcrumb-list">
+                    <li class="breadcrumb-item"><a href="/admin_dashboard.html">Admin Console</a></li>
+                    <li class="breadcrumb-separator">/</li>
+                    <li class="breadcrumb-item active" aria-current="page">Grievance Repository</li>
+                </ol>
+            </nav>
+
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Institutional Grievance Repository</h1>
+                    <p class="page-subtitle">Statutory tracking, departmental assignment, inquiry proceedings, and Action Taken Reports.</p>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="form-group" style="min-width: 200px;">
+                    <label class="form-label">Search Keyword (Title, Student, Ref No.)</label>
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search by Ref. No., Student Name, or Keyword...">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Disposal Status</label>
+                    <select id="statusFilter" class="form-control">
+                        <option value="">All Statuses</option>
+                        <option value="Submitted">Submitted</option>
+                        <option value="Pending">Pending Inquiry</option>
+                        <option value="In Progress">Under Review</option>
+                        <option value="Resolved">Resolved (Disposed)</option>
+                        <option value="Rejected">Dismissed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Severity Level</label>
+                    <select id="priorityFilter" class="form-control">
+                        <option value="">All Severity Levels</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; align-items: flex-end;">
+                    <button type="button" onclick="loadComplaints()" class="btn btn-primary" style="background: #0d9488; border-color: #0d9488;">Apply Filter</button>
+                    <button type="button" onclick="resetFilter()" class="btn btn-outline">Reset</button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="card">
+                <div class="card-header" style="justify-content: space-between;">
+                    <h2 class="card-title" id="resultsCount">Grievance Dossier Register</h2>
+                </div>
+                <div class="card-body" style="padding: 0;">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="col-ref">Grievance Ref. No.</th>
+                                    <th>Student Name</th>
+                                    <th class="col-category">Academic Domain</th>
+                                    <th class="col-title">Subject Summary</th>
+                                    <th class="col-priority">Severity</th>
+                                    <th class="col-status">Status</th>
+                                    <th>Assigned Cell</th>
+                                    <th class="col-date">Registered Date</th>
+                                    <th class="col-action">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allComplaintsBody">
+                                <tr><td colspan="9" style="text-align:center; padding: 2rem;">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script>
+        function loadComplaints() {
+            const status = document.getElementById('statusFilter').value;
+            const priority = document.getElementById('priorityFilter').value;
+            const search = document.getElementById('searchInput').value;
+
+            const url = `/api/admin/complaints?status=${encodeURIComponent(status)}&priority=${encodeURIComponent(priority)}&search=${encodeURIComponent(search)}`;
+            fetch(url)
+                .then(res => res.json())
+                .then(list => {
+                    document.getElementById('resultsCount').textContent = `Matching Complaints (${list.length} found)`;
+                    const tbody = document.getElementById('allComplaintsBody');
+                    if (list.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 2rem; color: var(--muted);">No complaints match the filter.</td></tr>';
+                        return;
+                    }
+
+                    tbody.innerHTML = list.map(c => `
+                        <tr>
+                            <td class="col-ref">CU/GRC/2026/00${c.complaint_id}</td>
+                            <td><strong>${c.studentName}</strong></td>
+                            <td>${c.categoryName}</td>
+                            <td><a href="/admin_complaint_detail.html?id=${c.complaint_id}" style="color: var(--primary); font-weight: 600;">${c.title}</a></td>
+                            <td><span class="badge badge-priority-${c.priority.toLowerCase()}">${c.priority}</span></td>
+                            <td><span class="badge badge-${c.status.toLowerCase().replace(' ', '')}">${c.status}</span></td>
+                            <td>${c.assigned_department ? c.assigned_department : '<span style="color: var(--muted); font-style: italic;">Unassigned Cell</span>'}</td>
+                            <td>${c.created_at}</td>
+                            <td><a href="/admin_complaint_detail.html?id=${c.complaint_id}" class="btn btn-outline btn-sm">Review Dossier</a></td>
+                        </tr>
+                    `).join('');
+                });
+        }
+
+        function resetFilter() {
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('priorityFilter').value = '';
+            document.getElementById('searchInput').value = '';
+            loadComplaints();
+        }
+
+        loadComplaints();
+    </script>
+</body>
+</html>

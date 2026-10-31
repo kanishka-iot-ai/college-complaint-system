@@ -1,0 +1,22 @@
+{
+  "name": "college-complaint-system",
+  "version": "1.0.0",
+  "description": "Chandigarh University Statutory Grievance Redressal Portal",
+  "main": "preview/server.js",
+  "scripts": {
+    "start": "node preview/server.js",
+    "test": "node -e \"console.log('Build OK')\""
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "grievance-management",
+    "college-complaint-system",
+    "jsp",
+    "servlets",
+    "mysql"
+  ],
+  "author": "Chandigarh University Grievance Cell",
+  "license": "MIT"
+}

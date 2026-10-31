@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/student/dashboard", "destination": "/student_dashboard.html" },
+    { "source": "/admin/dashboard", "destination": "/admin_dashboard.html" },
+    { "source": "/admin/complaints", "destination": "/admin_all_complaints.html" },
+    { "source": "/admin/students", "destination": "/admin_students.html" },
+    { "source": "/admin/reports", "destination": "/admin_reports.html" },
+    { "source": "/student/complaints", "destination": "/my_complaints.html" },
+    { "source": "/student/submit", "destination": "/submit_complaint.html" },
+    { "source": "/student/profile", "destination": "/student_profile.html" }
+  ]
+}

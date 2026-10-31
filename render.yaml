@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: cu-grievance-portal
+    env: node
+    plan: free
+    buildCommand: ""
+    startCommand: node preview/server.js
+    envVars:
+      - key: PORT
+        value: 10000

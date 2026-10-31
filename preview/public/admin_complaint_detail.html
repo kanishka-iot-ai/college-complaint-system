@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Complaint - Admin Console</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+    <nav class="navbar" style="border-bottom: 2px solid #0d9488;">
+        <a href="/admin_dashboard.html" class="navbar-brand">
+            <span class="brand-icon"><img src="/images/cu_logo.png" alt="CU Logo"></span>
+            <span>Admin Console</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-size: 0.95rem; color: var(--slate);">Logged as: <strong>Super Admin</strong></span>
+            <a href="/admin_login.html" class="btn btn-outline btn-sm">Sign Out</a>
+        </div>
+    </nav>
+
+    <div class="app-layout">
+        <aside class="sidebar admin-sidebar">
+            <div>
+                <div class="sidebar-header">
+                    <div class="sidebar-title">Grievance Cell</div>
+                    <div class="sidebar-user"><img src="/images/cu_logo.png" alt="CU Logo" class="sidebar-user-logo"><span>Member Secretary, GRC</span></div>
+                </div>
+
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item"><a href="/admin_dashboard.html"><svg class="ui-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg> Dashboard</a></li>
+                    <li class="sidebar-item active"><a href="/admin_all_complaints.html"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Grievance Dossiers</a></li>
+                    <li class="sidebar-item"><a href="/admin_students.html"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Student Registry</a></li>
+                    <li class="sidebar-item"><a href="/admin_reports.html"><svg class="ui-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Statistical ATR Reports</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="/admin_login.html" class="btn btn-outline btn-sm" style="width: 100%; color: #cbd5e1; border-color: rgba(255,255,255,0.2);"><svg class="ui-icon-sm" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Sign Out</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <nav class="breadcrumb-container" aria-label="Breadcrumb" style="margin: -1.25rem -1rem 1.25rem -1rem; padding: 0.75rem 1.25rem;">
+                <ol class="breadcrumb-list">
+                    <li class="breadcrumb-item"><a href="/admin_dashboard.html">Admin Console</a></li>
+                    <li class="breadcrumb-separator">/</li>
+                    <li class="breadcrumb-item"><a href="/admin_all_complaints.html">Grievance Dossiers</a></li>
+                    <li class="breadcrumb-separator">/</li>
+                    <li class="breadcrumb-item active" aria-current="page" id="breadcrumbRef">Inquiry Record</li>
+                </ol>
+            </nav>
+
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title" id="pageTitle">Grievance Dossier &amp; Inquiry Review</h1>
+                    <p class="page-subtitle" id="pageSubtitle">Statutory proceedings under Grievance Redressal Committee guidelines.</p>
+                </div>
+                <div>
+                    <a href="/admin_all_complaints.html" class="btn btn-outline">&larr; Return to Dossier Register</a>
+                </div>
+            </div>
+
+            <!-- Admin Action Box -->
+            <div class="card admin-action-card" style="border: 2px solid #0d9488; background-color: #f0fdfa;">
+                <div class="card-header" style="background-color: #ccfbf1; border-bottom: 1px solid #99f6e4;">
+                    <h2 class="card-title" style="color: #0f766e; display: flex; align-items: center;">
+                        <svg class="ui-icon" style="color: #0f766e;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Competent Authority Action &amp; Order Record
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <form onsubmit="handleAdminUpdate(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="newStatus" style="font-weight: 600;">Disposal Status Order *</label>
+                                <select id="newStatus" class="form-control" required style="border-color: #0d9488;">
+                                    <option value="Submitted">Submitted (Formal Intake)</option>
+                                    <option value="Pending">Pending Inquiry Proceedings</option>
+                                    <option value="In Progress">Under Active Investigation</option>
+                                    <option value="Resolved">Resolved (ATR Executed &amp; Disposed)</option>
+                                    <option value="Rejected">Dismissed as Non-Actionable</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="assignedDept" style="font-weight: 600;">Designated Department Cell</label>
+                                <input type="text" id="assignedDept" class="form-control" placeholder="e.g. Electrical Maintenance Cell, IT Operations">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="remarks" style="font-weight: 600;">Official Order &amp; Action Taken Remarks *</label>
+                            <textarea id="remarks" class="form-control" placeholder="Detail the inquiry findings, corrective steps ordered, or grounds for disposition..." rows="3" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="background: #0d9488; border-color: #0d9488; padding: 0.8rem 1.8rem;">
+                            Record Official Disposition &amp; Issue ATR
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Complaint Details Card -->
+            <div class="card">
+                <div class="card-header" style="justify-content: space-between;">
+                    <h2 class="card-title" id="complaintTitle">Loading...</h2>
+                    <div style="display: flex; gap: 0.5rem;" id="badgeContainer"></div>
+                </div>
+                <div class="card-body">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border);">
+                        <div>
+                            <span style="font-size: 0.8rem; text-transform: uppercase; color: var(--muted); font-weight: 600;">Category</span>
+                            <div style="font-weight: 600; font-size: 1.05rem; margin-top: 0.2rem;" id="complaintCat">--</div>
+                        </div>
+                        <div>
+                            <span style="font-size: 0.8rem; text-transform: uppercase; color: var(--muted); font-weight: 600;">Filed by Student</span>
+                            <div style="font-weight: 600; font-size: 1.05rem; margin-top: 0.2rem;" id="complaintStudent">--</div>
+                        </div>
+                        <div>
+                            <span style="font-size: 0.8rem; text-transform: uppercase; color: var(--muted); font-weight: 600;">Assigned Department</span>
+                            <div style="font-weight: 600; font-size: 1.05rem; margin-top: 0.2rem;" id="complaintDept">--</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="font-size: 1rem; color: var(--slate); margin-bottom: 0.5rem;">Submitted Grievance Description</h3>
+                        <div style="background-color: #f8fafc; padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border); line-height: 1.6;" id="complaintDesc">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Timeline -->
+            <div class="card">
+                <div class="card-header"><h2 class="card-title">Full Status Transition History</h2></div>
+                <div class="card-body" id="historyContainer"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id') || 1;
+
+        function refreshDetails() {
+            fetch('/api/complaint/' + id)
+                .then(res => res.json())
+                .then(c => {
+                    document.getElementById('pageTitle').textContent = 'Grievance Dossier CU/GRC/2026/' + String(c.complaint_id).padStart(3, '0');
+                    document.getElementById('pageSubtitle').textContent = 'Lodged by ' + c.studentName + ' on ' + c.created_at;
+                    document.getElementById('breadcrumbRef').textContent = 'CU/GRC/2026/' + String(c.complaint_id).padStart(3, '0');
+                    document.getElementById('complaintTitle').textContent = c.title;
+                    document.getElementById('complaintCat').textContent = c.categoryName;
+                    document.getElementById('complaintStudent').textContent = c.studentName;
+                    document.getElementById('complaintDept').textContent = c.assigned_department || 'Unassigned';
+                    document.getElementById('complaintDesc').textContent = c.description;
+
+                    document.getElementById('newStatus').value = c.status;
+                    document.getElementById('assignedDept').value = c.assigned_department || '';
+
+                    document.getElementById('badgeContainer').innerHTML = `
+                        <span class="badge badge-priority-${c.priority.toLowerCase()}">Priority: ${c.priority}</span>
+                        <span class="badge badge-${c.status.toLowerCase().replace(' ', '')}">Status: ${c.status}</span>
+                    `;
+
+                    const historyContainer = document.getElementById('historyContainer');
+                    if (c.history && c.history.length > 0) {
+                        historyContainer.innerHTML = `
+                            <div class="timeline">
+                                ${c.history.map(h => `
+                                    <div class="timeline-item">
+                                        <div class="timeline-date">${h.changed_at} &bull; by <strong>${h.admin_name}</strong></div>
+                                        <div class="timeline-content">
+                                            <div style="font-weight: 600;">Transition: <span style="color: var(--muted);">${h.old_status}</span> &rarr; <span style="color: #0d9488; font-weight: 700;">${h.new_status}</span></div>
+                                            <p style="font-size: 0.9rem; color: var(--slate); margin-top: 0.25rem;">&ldquo;${h.remarks}&rdquo;</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    } else {
+                        historyContainer.innerHTML = '<p style="color: var(--muted); font-style: italic;">No status transitions recorded yet.</p>';
+                    }
+                });
+        }
+
+        function handleAdminUpdate(e) {
+            e.preventDefault();
+            const newStatus = document.getElementById('newStatus').value;
+            const assignedDepartment = document.getElementById('assignedDept').value.trim();
+            const remarks = document.getElementById('remarks').value.trim();
+
+            fetch('/api/admin/updateComplaint', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ complaintId: id, newStatus, assignedDepartment, remarks })
+            })
+            .then(res => res.json())
+            .then(() => {
+                alert('Status updated successfully!');
+                document.getElementById('remarks').value = '';
+                refreshDetails();
+            });
+        }
+
+        refreshDetails();
+    </script>
+</body>
+</html>
