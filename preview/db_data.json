@@ -1,0 +1,519 @@
+{
+  "students": [
+    {
+      "student_id": 1,
+      "uid": "26BAI10196",
+      "name": "MOHAMMED TEHJIB NIZAM CHOWDHURY",
+      "email": "26BAI10196@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Computer Science",
+      "semester": 4,
+      "phone": "9876543210",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 2,
+      "uid": "25BCY70275",
+      "name": "PIYESH KUMAR DAS",
+      "email": "25BCY70275@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Cyber Security",
+      "semester": 5,
+      "phone": "9876543211",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 3,
+      "uid": "26BAI10195",
+      "name": "Singiri sireesha",
+      "email": "26BAI10195@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Artificial Intelligence",
+      "semester": 4,
+      "phone": "9876543212",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 4,
+      "uid": "26BAI10118",
+      "name": "APARAJITA GOPE ARPA",
+      "email": "26BAI10118@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Artificial Intelligence",
+      "semester": 4,
+      "phone": "9876543213",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 5,
+      "uid": "26BDS80005",
+      "name": "AYUSH KUMAR PATEL",
+      "email": "26BDS80005@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Data Science",
+      "semester": 4,
+      "phone": "9876543214",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 6,
+      "uid": "26BDS80004",
+      "name": "MD RAZAUDDIN",
+      "email": "26BDS80004@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Data Science",
+      "semester": 4,
+      "phone": "9876543215",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 7,
+      "uid": "26BAI80018",
+      "name": "VIDHITA CHAUDHARY",
+      "email": "26BAI80018@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Artificial Intelligence",
+      "semester": 4,
+      "phone": "9876543216",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 8,
+      "uid": "25BAI70994",
+      "name": "MEHAKPREET KAUR",
+      "email": "25BAI70994@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Artificial Intelligence",
+      "semester": 5,
+      "phone": "9876543217",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 9,
+      "uid": "25BDA70080",
+      "name": "RIKSHESH SINGH",
+      "email": "25BDA70080@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Big Data Analytics",
+      "semester": 5,
+      "phone": "9876543218",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 10,
+      "uid": "25BCC70040",
+      "name": "DHRUV",
+      "email": "25BCC70040@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Cloud Computing",
+      "semester": 5,
+      "phone": "9876543219",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 11,
+      "uid": "25BCY70056",
+      "name": "NAVEEN CHAUDHARY",
+      "email": "25BCY70056@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Cyber Security",
+      "semester": 5,
+      "phone": "9876543220",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 12,
+      "uid": "25BAI70221",
+      "name": "VIPLAV MITTAL",
+      "email": "25BAI70221@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Artificial Intelligence",
+      "semester": 5,
+      "phone": "9876543221",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 13,
+      "uid": "25BDA70085",
+      "name": "SAHIL KUMAR DOGRA",
+      "email": "25BDA70085@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Big Data Analytics",
+      "semester": 5,
+      "phone": "9876543222",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 14,
+      "uid": "25BDA70265",
+      "name": "KRIPANSHU SIKDAR",
+      "email": "25BDA70265@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Big Data Analytics",
+      "semester": 5,
+      "phone": "9876543223",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 15,
+      "uid": "25BAI70939",
+      "name": "VIKALP ANGROYA",
+      "email": "25BAI70939@cuchd.in",
+      "password": "password123",
+      "section": "Society, Sustainability & Human Values",
+      "department": "Artificial Intelligence",
+      "semester": 5,
+      "phone": "9876543224",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 16,
+      "uid": "25IBD70002",
+      "name": "AMAN KUMARI",
+      "email": "25IBD70002@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Integrated Big Data",
+      "semester": 5,
+      "phone": "9876543225",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 17,
+      "uid": "25BCY70007",
+      "name": "SAKSHAM KAPATIA",
+      "email": "25BCY70007@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Cyber Security",
+      "semester": 5,
+      "phone": "9876543226",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 18,
+      "uid": "25BDA70014",
+      "name": "SUKRIT SONI",
+      "email": "25BDA70014@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Big Data Analytics",
+      "semester": 5,
+      "phone": "9876543227",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 19,
+      "uid": "25BAI70107",
+      "name": "ABHICHAL VERMA",
+      "email": "25BAI70107@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Artificial Intelligence",
+      "semester": 5,
+      "phone": "9876543228",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 20,
+      "uid": "25BDA70106",
+      "name": "PRATHAM DOGRA",
+      "email": "25BDA70106@cuchd.in",
+      "password": "password123",
+      "section": "Future Skills & Innovation",
+      "department": "Big Data Analytics",
+      "semester": 5,
+      "phone": "9876543229",
+      "is_active": true,
+      "created_at": "2026-10-25"
+    },
+    {
+      "student_id": 21,
+      "uid": "26CU00021",
+      "name": "Kanishka Giri (Updated)",
+      "email": "kanishka.student.1793521800428@cuchd.in",
+      "password": "SecurePassword2026!",
+      "section": "Registered General",
+      "department": "Artificial Intelligence",
+      "semester": 6,
+      "phone": "9876543200",
+      "is_active": true,
+      "created_at": "2026-11-01"
+    }
+  ],
+  "admins": [
+    {
+      "admin_id": 1,
+      "name": "Super Admin",
+      "email": "admin@college.edu",
+      "username": "admin",
+      "password": "password123"
+    },
+    {
+      "admin_id": 2,
+      "name": "Member Secretary, GRC",
+      "email": "secretary@college.edu",
+      "username": "secretary",
+      "password": "password123"
+    }
+  ],
+  "categories": [
+    {
+      "category_id": 1,
+      "category_name": "Classroom"
+    },
+    {
+      "category_id": 2,
+      "category_name": "Laboratory"
+    },
+    {
+      "category_id": 3,
+      "category_name": "Library"
+    },
+    {
+      "category_id": 4,
+      "category_name": "Hostel"
+    },
+    {
+      "category_id": 5,
+      "category_name": "Washroom"
+    },
+    {
+      "category_id": 6,
+      "category_name": "Electricity"
+    },
+    {
+      "category_id": 7,
+      "category_name": "Water Supply"
+    },
+    {
+      "category_id": 8,
+      "category_name": "Internet"
+    },
+    {
+      "category_id": 9,
+      "category_name": "Faculty"
+    },
+    {
+      "category_id": 10,
+      "category_name": "Canteen"
+    },
+    {
+      "category_id": 11,
+      "category_name": "Other"
+    }
+  ],
+  "complaints": [
+    {
+      "complaint_id": 9,
+      "student_id": 21,
+      "category_id": 8,
+      "title": "5G Wi-Fi AP signal drop in Academic Block 3",
+      "description": "Wi-Fi connection continuously resets during lab simulation hours between 2 PM and 5 PM.",
+      "priority": "High",
+      "status": "Resolved",
+      "assigned_department": "Network Operations Cell",
+      "created_at": "2026-11-01 08:30:00",
+      "updated_at": "2026-11-01 08:30:00"
+    },
+    {
+      "complaint_id": 1,
+      "student_id": 1,
+      "category_id": 8,
+      "title": "Wi-Fi not working in Block-C",
+      "description": "The Wi-Fi access points in Block-C have been non-functional for three days.",
+      "priority": "High",
+      "status": "Resolved",
+      "assigned_department": "IT Department",
+      "created_at": "2026-10-25 09:30:00",
+      "updated_at": "2026-10-28 14:15:00"
+    },
+    {
+      "complaint_id": 2,
+      "student_id": 2,
+      "category_id": 1,
+      "title": "Projector malfunction in Room 204",
+      "description": "The projector in Classroom 204 flickers continuously during lectures.",
+      "priority": "Medium",
+      "status": "In Progress",
+      "assigned_department": "Maintenance Department",
+      "created_at": "2026-10-26 11:20:00",
+      "updated_at": "2026-10-29 10:00:00"
+    },
+    {
+      "complaint_id": 3,
+      "student_id": 3,
+      "category_id": 6,
+      "title": "Power outage in ECE lab every evening",
+      "description": "Power trips every evening around 5 PM causing loss of simulation experiments.",
+      "priority": "High",
+      "status": "Pending",
+      "assigned_department": "Electrical Department",
+      "created_at": "2026-10-27 15:45:00",
+      "updated_at": "2026-10-27 15:45:00"
+    },
+    {
+      "complaint_id": 4,
+      "student_id": 4,
+      "category_id": 7,
+      "title": "No drinking water on 3rd floor",
+      "description": "The water cooler on the 3rd floor of MECH block has been out of order for 2 weeks.",
+      "priority": "Medium",
+      "status": "Resolved",
+      "assigned_department": "Maintenance Department",
+      "created_at": "2026-10-28 10:10:00",
+      "updated_at": "2026-10-30 16:30:00"
+    },
+    {
+      "complaint_id": 5,
+      "student_id": 5,
+      "category_id": 4,
+      "title": "Hostel room roof leaking during rain",
+      "description": "Room 312 roof leaks during rain, damaging student books and beds.",
+      "priority": "High",
+      "status": "Submitted",
+      "assigned_department": null,
+      "created_at": "2026-10-29 08:50:00",
+      "updated_at": "2026-10-29 08:50:00"
+    },
+    {
+      "complaint_id": 6,
+      "student_id": 1,
+      "category_id": 10,
+      "title": "Canteen food quality is poor",
+      "description": "Food hygiene standards have dropped and stale snacks are being served.",
+      "priority": "Low",
+      "status": "Rejected",
+      "assigned_department": "Canteen Committee",
+      "created_at": "2026-10-29 13:00:00",
+      "updated_at": "2026-10-30 11:15:00"
+    },
+    {
+      "complaint_id": 7,
+      "student_id": 2,
+      "category_id": 5,
+      "title": "Washrooms near Library need cleaning",
+      "description": "The washrooms adjacent to the library need daily sanitization.",
+      "priority": "Medium",
+      "status": "Pending",
+      "assigned_department": "Housekeeping Department",
+      "created_at": "2026-10-30 14:00:00",
+      "updated_at": "2026-10-30 14:00:00"
+    },
+    {
+      "complaint_id": 8,
+      "student_id": 3,
+      "category_id": 9,
+      "title": "Faculty repeatedly absent without notice",
+      "description": "DSA professor missed 4 consecutive lectures without substitute arrangements.",
+      "priority": "High",
+      "status": "In Progress",
+      "assigned_department": "Academic Department",
+      "created_at": "2026-10-31 09:15:00",
+      "updated_at": "2026-10-31 10:30:00"
+    }
+  ],
+  "resolutions": [
+    {
+      "resolution_id": 1,
+      "complaint_id": 1,
+      "admin_id": 1,
+      "remarks": "Replaced dual-band Wi-Fi APs in Block-C. Signal strength restored to -48 dBm.",
+      "resolution_date": "2026-10-28 14:15:00"
+    },
+    {
+      "resolution_id": 2,
+      "complaint_id": 4,
+      "admin_id": 2,
+      "remarks": "Replaced copper thermostat and compressor filter. Chilled water restored.",
+      "resolution_date": "2026-10-30 16:30:00"
+    },
+    {
+      "resolution_id": 3,
+      "complaint_id": 9,
+      "admin_id": 1,
+      "remarks": "Upgraded access point antennas and updated firmware. Signal strength certified at -42 dBm.",
+      "resolution_date": "2026-11-01 08:30:00"
+    }
+  ],
+  "history": [
+    {
+      "history_id": 5,
+      "complaint_id": 9,
+      "admin_name": "Member Secretary, GRC",
+      "old_status": "In Progress",
+      "new_status": "Resolved",
+      "remarks": "Upgraded access point antennas and updated firmware. Signal strength certified at -42 dBm.",
+      "changed_at": "2026-11-01 08:30:00"
+    },
+    {
+      "history_id": 4,
+      "complaint_id": 9,
+      "admin_name": "Member Secretary, GRC",
+      "old_status": "Submitted",
+      "new_status": "In Progress",
+      "remarks": "Dispatched telecom engineer to calibrate Wi-Fi access points.",
+      "changed_at": "2026-11-01 08:30:00"
+    },
+    {
+      "history_id": 1,
+      "complaint_id": 1,
+      "admin_name": "Super Admin",
+      "old_status": "Submitted",
+      "new_status": "Pending",
+      "remarks": "Received and assigned to IT Department.",
+      "changed_at": "2026-10-25 10:00:00"
+    },
+    {
+      "history_id": 2,
+      "complaint_id": 1,
+      "admin_name": "Super Admin",
+      "old_status": "Pending",
+      "new_status": "In Progress",
+      "remarks": "Technician dispatched to inspect access points.",
+      "changed_at": "2026-10-26 11:00:00"
+    },
+    {
+      "history_id": 3,
+      "complaint_id": 1,
+      "admin_name": "Super Admin",
+      "old_status": "In Progress",
+      "new_status": "Resolved",
+      "remarks": "Replaced APs in Block-C. Verified operational.",
+      "changed_at": "2026-10-28 14:15:00"
+    }
+  ]
+}

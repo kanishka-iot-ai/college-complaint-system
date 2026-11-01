@@ -20,8 +20,8 @@
             <span>Admin Console</span>
         </a>
         <div style="display: flex; align-items: center; gap: 1rem;">
-            <span style="font-size: 0.95rem; color: var(--slate);">Logged as: <strong>Super Admin</strong></span>
-            <a href="/admin_login.html" class="btn btn-outline btn-sm">Sign Out</a>
+            <span style="font-size: 0.95rem; color: var(--slate);">Logged as: <strong id="adminNameDisplay">Super Admin</strong></span>
+            <button type="button" onclick="handleAdminSignOut()" class="btn btn-outline btn-sm">Sign Out</button>
         </div>
     </nav>
 
@@ -211,6 +211,20 @@
         }
 
         refreshDetails();
+    </script>
+
+    <script>
+        const adminUser = JSON.parse(localStorage.getItem("admin_user") || "null");
+        if (!adminUser) {
+            window.location.href = "/admin_login.html";
+        } else if (document.getElementById("adminNameDisplay")) {
+            document.getElementById("adminNameDisplay").textContent = adminUser.name || "Administrator";
+        }
+
+        function handleAdminSignOut() {
+            localStorage.removeItem("admin_user");
+            window.location.href = "/admin_login.html";
+        }
     </script>
 </body>
 </html>

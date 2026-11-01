@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Registration - College Complaint System</title>
+    <title>Student Registration - Grievance Redressal Portal</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20261101">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=20261101">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=20261101">
@@ -18,8 +18,10 @@
             <div class="auth-header">
                 <img src="/images/cu_logo.png?v=20261101" alt="CU Logo" class="brand-logo-card">
                 <h1>Student Registration</h1>
-                <p>Create an account to submit complaints and follow up on inquiries</p>
+                <p>Create your official student account to lodge grievances and track Action Taken Reports (ATRs)</p>
             </div>
+
+            <div id="alertBox"></div>
 
             <form id="regForm" onsubmit="handleRegister(event)">
                 <div class="form-row">
@@ -30,7 +32,7 @@
 
                     <div class="form-group">
                         <label class="form-label" for="email">College Email Address *</label>
-                        <input type="email" id="email" class="form-control" placeholder="e.g. rahul@student.edu" required>
+                        <input type="email" id="email" class="form-control" placeholder="e.g. rahul@student.cuchd.in" required>
                     </div>
                 </div>
 
@@ -40,6 +42,10 @@
                         <select id="department" class="form-control" required>
                             <option value="">-- Select Department --</option>
                             <option value="Computer Science">Computer Science & Engineering</option>
+                            <option value="Artificial Intelligence">Artificial Intelligence</option>
+                            <option value="Cyber Security">Cyber Security</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="Cloud Computing">Cloud Computing</option>
                             <option value="Information Technology">Information Technology</option>
                             <option value="Electronics">Electronics & Communication</option>
                             <option value="Mechanical">Mechanical Engineering</option>
@@ -71,22 +77,22 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label" for="password">Create Password *</label>
-                        <input type="password" id="password" class="form-control" placeholder="Min. 8 characters" required>
+                        <input type="password" id="password" class="form-control" placeholder="Min. 8 characters" required minlength="8">
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="confirmPassword">Confirm Password *</label>
-                        <input type="password" id="confirmPassword" class="form-control" placeholder="Re-enter password" required>
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="Re-enter password" required minlength="8">
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.85rem;">
-                    Complete Registration
+                <button type="submit" id="regBtn" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.85rem;">
+                    Complete Registration &rarr;
                 </button>
             </form>
 
             <div class="auth-footer">
-                <p>Already have an account? <a href="/login.html" style="font-weight: 600;">Sign In here</a></p>
+                <p>Already have an account? <a href="/login.html" style="font-weight: 600; color: var(--primary);">Sign In here</a></p>
                 <div style="margin-top: 0.75rem;">
                     <a href="/" style="color: #94a3b8; font-size: 0.85rem;">
                         &larr; Back to Home Page
@@ -99,8 +105,51 @@
     <script>
         function handleRegister(e) {
             e.preventDefault();
-            alert('Registration simulated successfully! Redirecting to login.');
-            window.location.href = '/login.html';
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const department = document.getElementById('department').value;
+            const semester = document.getElementById('semester').value;
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const alertBox = document.getElementById('alertBox');
+            const regBtn = document.getElementById('regBtn');
+
+            alertBox.innerHTML = '';
+
+            if (password !== confirmPassword) {
+                alertBox.innerHTML = '<div class="alert alert-danger" style="margin-bottom: 1.25rem;">Passwords do not match. Please re-enter.</div>';
+                return;
+            }
+
+            regBtn.disabled = true;
+            regBtn.textContent = 'Registering account...';
+
+            fetch('/api/student/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, department, semester, phone, password })
+            })
+            .then(res => res.json().then(data => ({ status: res.status, body: data })))
+            .then(({ status, body }) => {
+                regBtn.disabled = false;
+                regBtn.innerHTML = 'Complete Registration &rarr;';
+
+                if ((status === 200 || status === 201) && body.success) {
+                    localStorage.setItem('student_user', JSON.stringify(body.student));
+                    alertBox.innerHTML = '<div class="alert alert-success" style="margin-bottom: 1.25rem;">Registration completed successfully! Entering your dashboard...</div>';
+                    setTimeout(() => {
+                        window.location.href = '/student_dashboard.html';
+                    }, 1000);
+                } else {
+                    alertBox.innerHTML = '<div class="alert alert-danger" style="margin-bottom: 1.25rem;">' + (body.error || 'Registration failed.') + '</div>';
+                }
+            })
+            .catch(err => {
+                regBtn.disabled = false;
+                regBtn.innerHTML = 'Complete Registration &rarr;';
+                alertBox.innerHTML = '<div class="alert alert-danger" style="margin-bottom: 1.25rem;">Server connection error. Please try again.</div>';
+            });
         }
     </script>
 </body>

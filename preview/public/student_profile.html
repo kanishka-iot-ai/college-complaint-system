@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,10 +21,10 @@
         <div style="display: flex; align-items: center; gap: 1rem;">
             <span style="font-size: 0.95rem; color: var(--slate); display: inline-flex; align-items: center; gap: 0.4rem;">
                 <svg class="ui-icon-sm" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                <strong>MOHAMMED TEHJIB NIZAM CHOWDHURY</strong>
-                <span class="badge badge-section-innovation">26BAI10196</span>
+                <strong id="studentHeaderName">Student</strong>
+                <span class="badge badge-section-innovation" id="studentHeaderUid">Active</span>
             </span>
-            <a href="/login.html" class="btn btn-outline btn-sm">Sign Out</a>
+            <button type="button" onclick="handleSignOut()" class="btn btn-outline btn-sm">Sign Out</button>
         </div>
     </nav>
 
@@ -35,7 +35,7 @@
                     <div class="sidebar-title">Student Portal</div>
                     <div class="sidebar-user">
                         <img src="/images/cu_logo.png?v=20261101" alt="CU Logo" class="sidebar-user-logo">
-                        <span>MOHAMMED TEHJIB NIZAM CHOWDHURY</span>
+                        <span id="sidebarStudentName">Student Profile</span>
                     </div>
                 </div>
 
@@ -94,28 +94,29 @@
             <div class="card" style="max-width: 750px;">
                 <div class="card-header"><h2 class="card-title">Student Account Profile</h2></div>
                 <div class="card-body">
+                    <div id="profileAlert"></div>
                     <form onsubmit="handleProfileSave(event)">
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label" for="uid">University UID (Read Only)</label>
-                                <input type="text" id="uid" class="form-control" value="26BAI10196" readonly style="background-color: #f1f5f9; cursor: not-allowed; font-weight: 600; color: #1e3a8a;">
+                                <input type="text" id="uid" class="form-control" readonly style="background-color: #f1f5f9; cursor: not-allowed; font-weight: 600; color: #1e3a8a;">
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label" for="section">Section / Academic Category (Read Only)</label>
-                                <input type="text" id="section" class="form-control" value="Future Skills &amp; Innovation" readonly style="background-color: #f1f5f9; cursor: not-allowed; font-weight: 600; color: #0d9488;">
+                                <input type="text" id="section" class="form-control" readonly style="background-color: #f1f5f9; cursor: not-allowed; font-weight: 600; color: #0d9488;">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label" for="name">Full Name *</label>
-                                <input type="text" id="name" class="form-control" value="MOHAMMED TEHJIB NIZAM CHOWDHURY" required>
+                                <input type="text" id="name" class="form-control" placeholder="Full legal name" required>
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label" for="email">Institutional Email (Read Only)</label>
-                                <input type="email" id="email" class="form-control" value="26BAI10196@cuchd.in" readonly style="background-color: #f1f5f9; cursor: not-allowed;">
+                                <input type="email" id="email" class="form-control" readonly style="background-color: #f1f5f9; cursor: not-allowed;">
                             </div>
                         </div>
 
@@ -123,7 +124,11 @@
                             <div class="form-group">
                                 <label class="form-label" for="department">Department *</label>
                                 <select id="department" class="form-control" required>
-                                    <option value="Computer Science" selected>Computer Science &amp; Engineering</option>
+                                    <option value="Computer Science">Computer Science &amp; Engineering</option>
+                                    <option value="Artificial Intelligence">Artificial Intelligence</option>
+                                    <option value="Cyber Security">Cyber Security</option>
+                                    <option value="Data Science">Data Science</option>
+                                    <option value="Cloud Computing">Cloud Computing</option>
                                     <option value="Information Technology">Information Technology</option>
                                     <option value="Electronics">Electronics &amp; Communication</option>
                                     <option value="Mechanical">Mechanical Engineering</option>
@@ -138,7 +143,7 @@
                                     <option value="2">Semester 2</option>
                                     <option value="3">Semester 3</option>
                                     <option value="4">Semester 4</option>
-                                    <option value="5" selected>Semester 5</option>
+                                    <option value="5">Semester 5</option>
                                     <option value="6">Semester 6</option>
                                     <option value="7">Semester 7</option>
                                     <option value="8">Semester 8</option>
@@ -148,10 +153,10 @@
 
                         <div class="form-group">
                             <label class="form-label" for="phone">Contact Mobile Number *</label>
-                            <input type="tel" id="phone" class="form-control" value="9876543210" maxlength="10" required>
+                            <input type="tel" id="phone" class="form-control" placeholder="10-digit mobile number" maxlength="10" required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
+                        <button type="submit" id="saveBtn" class="btn btn-primary" style="margin-top: 1rem;">
                             Update Academic Profile Information
                         </button>
                     </form>
@@ -162,9 +167,78 @@
 
     <script src="/js/main.js"></script>
     <script>
+        const studentUser = JSON.parse(localStorage.getItem('student_user') || 'null');
+        if (!studentUser) {
+            window.location.href = '/login.html';
+        } else {
+            document.getElementById('studentHeaderName').textContent = studentUser.name || 'Student';
+            document.getElementById('studentHeaderUid').textContent = studentUser.uid || studentUser.email;
+            document.getElementById('sidebarStudentName').textContent = studentUser.name || 'Student';
+        }
+
+        function handleSignOut() {
+            localStorage.removeItem('student_user');
+            window.location.href = '/login.html';
+        }
+
+        // Fetch current profile
+        fetch('/api/student/profile?studentId=' + (studentUser ? studentUser.student_id : 1))
+            .then(res => res.json())
+            .then(s => {
+                document.getElementById('uid').value = s.uid || '--';
+                document.getElementById('section').value = s.section || 'General';
+                document.getElementById('name').value = s.name || '';
+                document.getElementById('email').value = s.email || '';
+                document.getElementById('department').value = s.department || 'Computer Science';
+                document.getElementById('semester').value = s.semester || 1;
+                document.getElementById('phone').value = s.phone || '';
+            });
+
         function handleProfileSave(e) {
             e.preventDefault();
-            alert('Profile details updated successfully.');
+            const name = document.getElementById('name').value.trim();
+            const department = document.getElementById('department').value;
+            const semester = document.getElementById('semester').value;
+            const phone = document.getElementById('phone').value.trim();
+            const alertBox = document.getElementById('profileAlert');
+            const saveBtn = document.getElementById('saveBtn');
+
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving updates...';
+
+            fetch('/api/student/profile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    studentId: studentUser ? studentUser.student_id : 1,
+                    name,
+                    department,
+                    semester,
+                    phone
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Update Academic Profile Information';
+                if (data.success) {
+                    studentUser.name = name;
+                    studentUser.department = department;
+                    studentUser.semester = semester;
+                    studentUser.phone = phone;
+                    localStorage.setItem('student_user', JSON.stringify(studentUser));
+                    document.getElementById('studentHeaderName').textContent = name;
+                    document.getElementById('sidebarStudentName').textContent = name;
+                    alertBox.innerHTML = '<div class="alert alert-success" style="margin-bottom: 1.25rem;">Academic profile details successfully updated and certified.</div>';
+                } else {
+                    alertBox.innerHTML = '<div class="alert alert-danger" style="margin-bottom: 1.25rem;">Failed to update profile.</div>';
+                }
+            })
+            .catch(err => {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Update Academic Profile Information';
+                alertBox.innerHTML = '<div class="alert alert-danger" style="margin-bottom: 1.25rem;">Server connection error.</div>';
+            });
         }
     </script>
 </body>

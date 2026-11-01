@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrator Login - College Complaint System</title>
+    <title>Administrator Login - Grievance Redressal Committee</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20261101">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=20261101">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=20261101">
@@ -19,28 +19,30 @@
             <div class="auth-header">
                 <img src="/images/cu_logo.png?v=20261101" alt="CU Logo" class="brand-logo-card">
                 <h1>Admin Portal</h1>
-                <p>Authorized Administrative Personnel Only</p>
+                <p>Authorized Grievance Redressal Committee Personnel Only</p>
             </div>
+
+            <div id="alertBox"></div>
 
             <form onsubmit="handleAdminLogin(event)">
                 <div class="form-group">
-                    <label class="form-label" for="email">Admin Email</label>
-                    <input type="email" id="email" class="form-control" value="admin@college.edu" required autofocus>
+                    <label class="form-label" for="email">Admin Email or Username</label>
+                    <input type="text" id="email" class="form-control" placeholder="e.g. admin@college.edu or admin" required autofocus>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="password">Security Password</label>
-                    <input type="password" id="password" class="form-control" value="Admin@123" required>
+                    <input type="password" id="password" class="form-control" placeholder="Enter security password" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.85rem; background: #0d9488; border-color: #0d9488;">
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.85rem; background: #0d9488; border-color: #0d9488;">
                     Enter Admin Console &rarr;
                 </button>
             </form>
 
             <div class="auth-footer">
                 <p style="font-size: 0.85rem; color: #94a3b8;">
-                    Demo Account: <strong>admin@college.edu</strong> / <strong>Admin@123</strong>
+                    Protected Institutional Gateway &bull; Strictly for GRC Committee &amp; Department Heads
                 </p>
                 <div style="margin-top: 1rem;">
                     <a href="/login.html" style="color: #64748b; font-size: 0.85rem;">
@@ -54,7 +56,37 @@
     <script>
         function handleAdminLogin(e) {
             e.preventDefault();
-            window.location.href = '/admin_dashboard.html';
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const alertBox = document.getElementById('alertBox');
+            const submitBtn = document.getElementById('submitBtn');
+
+            alertBox.innerHTML = '';
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Authenticating...';
+
+            fetch('/api/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            })
+            .then(res => res.json().then(data => ({ status: res.status, body: data })))
+            .then(({ status, body }) => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Enter Admin Console &rarr;';
+
+                if (status === 200 && body.success) {
+                    localStorage.setItem('admin_user', JSON.stringify(body.admin));
+                    window.location.href = '/admin_dashboard.html';
+                } else {
+                    alertBox.innerHTML = '<div class="alert alert-danger" style="margin-bottom: 1.25rem;">' + (body.error || 'Invalid administrator credentials.') + '</div>';
+                }
+            })
+            .catch(err => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Enter Admin Console &rarr;';
+                alertBox.innerHTML = '<div class="alert alert-danger" style="margin-bottom: 1.25rem;">Server connection error. Please try again.</div>';
+            });
         }
     </script>
 </body>

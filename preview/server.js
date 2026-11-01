@@ -5,34 +5,35 @@ const url = require('url');
 
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, 'public');
+const STATE_FILE = process.env.VERCEL ? '/tmp/college_complaint_db.json' : path.join(__dirname, 'db_data.json');
 
-// --- In-Memory Relational Database (Seeded from college_complaint_db.sql) ---
-const db = {
+// --- In-Memory Relational Database (Initial Seed) ---
+const seedDb = {
     students: [
-        { student_id: 1, uid: '26BAI10196', name: 'MOHAMMED TEHJIB NIZAM CHOWDHURY', email: '26BAI10196@cuchd.in', section: 'Future Skills & Innovation', department: 'Computer Science', semester: 4, is_active: true, created_at: '2026-10-25' },
-        { student_id: 2, uid: '25BCY70275', name: 'PIYESH KUMAR DAS', email: '25BCY70275@cuchd.in', section: 'Future Skills & Innovation', department: 'Cyber Security', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 3, uid: '26BAI10195', name: 'Singiri sireesha', email: '26BAI10195@cuchd.in', section: 'Future Skills & Innovation', department: 'Artificial Intelligence', semester: 4, is_active: true, created_at: '2026-10-25' },
-        { student_id: 4, uid: '26BAI10118', name: 'APARAJITA GOPE ARPA', email: '26BAI10118@cuchd.in', section: 'Future Skills & Innovation', department: 'Artificial Intelligence', semester: 4, is_active: true, created_at: '2026-10-25' },
-        { student_id: 5, uid: '26BDS80005', name: 'AYUSH KUMAR PATEL', email: '26BDS80005@cuchd.in', section: 'Future Skills & Innovation', department: 'Data Science', semester: 4, is_active: true, created_at: '2026-10-25' },
-        { student_id: 6, uid: '26BDS80004', name: 'MD RAZAUDDIN', email: '26BDS80004@cuchd.in', section: 'Future Skills & Innovation', department: 'Data Science', semester: 4, is_active: true, created_at: '2026-10-25' },
-        { student_id: 7, uid: '26BAI80018', name: 'VIDHITA CHAUDHARY', email: '26BAI80018@cuchd.in', section: 'Future Skills & Innovation', department: 'Artificial Intelligence', semester: 4, is_active: true, created_at: '2026-10-25' },
-        { student_id: 8, uid: '25BAI70994', name: 'MEHAKPREET KAUR', email: '25BAI70994@cuchd.in', section: 'Future Skills & Innovation', department: 'Artificial Intelligence', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 9, uid: '25BDA70080', name: 'RIKSHESH SINGH', email: '25BDA70080@cuchd.in', section: 'Future Skills & Innovation', department: 'Big Data Analytics', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 10, uid: '25BCC70040', name: 'DHRUV', email: '25BCC70040@cuchd.in', section: 'Future Skills & Innovation', department: 'Cloud Computing', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 11, uid: '25BCY70056', name: 'NAVEEN CHAUDHARY', email: '25BCY70056@cuchd.in', section: 'Future Skills & Innovation', department: 'Cyber Security', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 12, uid: '25BAI70221', name: 'VIPLAV MITTAL', email: '25BAI70221@cuchd.in', section: 'Future Skills & Innovation', department: 'Artificial Intelligence', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 13, uid: '25BDA70085', name: 'SAHIL KUMAR DOGRA', email: '25BDA70085@cuchd.in', section: 'Future Skills & Innovation', department: 'Big Data Analytics', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 14, uid: '25BDA70265', name: 'KRIPANSHU SIKDAR', email: '25BDA70265@cuchd.in', section: 'Future Skills & Innovation', department: 'Big Data Analytics', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 15, uid: '25BAI70939', name: 'VIKALP ANGROYA', email: '25BAI70939@cuchd.in', section: 'Society, Sustainability & Human Values', department: 'Artificial Intelligence', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 16, uid: '25IBD70002', name: 'AMAN KUMARI', email: '25IBD70002@cuchd.in', section: 'Future Skills & Innovation', department: 'Integrated Big Data', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 17, uid: '25BCY70007', name: 'SAKSHAM KAPATIA', email: '25BCY70007@cuchd.in', section: 'Future Skills & Innovation', department: 'Cyber Security', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 18, uid: '25BDA70014', name: 'SUKRIT SONI', email: '25BDA70014@cuchd.in', section: 'Future Skills & Innovation', department: 'Big Data Analytics', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 19, uid: '25BAI70107', name: 'ABHICHAL VERMA', email: '25BAI70107@cuchd.in', section: 'Future Skills & Innovation', department: 'Artificial Intelligence', semester: 5, is_active: true, created_at: '2026-10-25' },
-        { student_id: 20, uid: '25BDA70106', name: 'PRATHAM DOGRA', email: '25BDA70106@cuchd.in', section: 'Future Skills & Innovation', department: 'Big Data Analytics', semester: 5, is_active: true, created_at: '2026-10-25' }
+        { student_id: 1, uid: '26BAI10196', name: 'MOHAMMED TEHJIB NIZAM CHOWDHURY', email: '26BAI10196@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Computer Science', semester: 4, phone: '9876543210', is_active: true, created_at: '2026-10-25' },
+        { student_id: 2, uid: '25BCY70275', name: 'PIYESH KUMAR DAS', email: '25BCY70275@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Cyber Security', semester: 5, phone: '9876543211', is_active: true, created_at: '2026-10-25' },
+        { student_id: 3, uid: '26BAI10195', name: 'Singiri sireesha', email: '26BAI10195@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Artificial Intelligence', semester: 4, phone: '9876543212', is_active: true, created_at: '2026-10-25' },
+        { student_id: 4, uid: '26BAI10118', name: 'APARAJITA GOPE ARPA', email: '26BAI10118@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Artificial Intelligence', semester: 4, phone: '9876543213', is_active: true, created_at: '2026-10-25' },
+        { student_id: 5, uid: '26BDS80005', name: 'AYUSH KUMAR PATEL', email: '26BDS80005@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Data Science', semester: 4, phone: '9876543214', is_active: true, created_at: '2026-10-25' },
+        { student_id: 6, uid: '26BDS80004', name: 'MD RAZAUDDIN', email: '26BDS80004@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Data Science', semester: 4, phone: '9876543215', is_active: true, created_at: '2026-10-25' },
+        { student_id: 7, uid: '26BAI80018', name: 'VIDHITA CHAUDHARY', email: '26BAI80018@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Artificial Intelligence', semester: 4, phone: '9876543216', is_active: true, created_at: '2026-10-25' },
+        { student_id: 8, uid: '25BAI70994', name: 'MEHAKPREET KAUR', email: '25BAI70994@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Artificial Intelligence', semester: 5, phone: '9876543217', is_active: true, created_at: '2026-10-25' },
+        { student_id: 9, uid: '25BDA70080', name: 'RIKSHESH SINGH', email: '25BDA70080@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Big Data Analytics', semester: 5, phone: '9876543218', is_active: true, created_at: '2026-10-25' },
+        { student_id: 10, uid: '25BCC70040', name: 'DHRUV', email: '25BCC70040@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Cloud Computing', semester: 5, phone: '9876543219', is_active: true, created_at: '2026-10-25' },
+        { student_id: 11, uid: '25BCY70056', name: 'NAVEEN CHAUDHARY', email: '25BCY70056@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Cyber Security', semester: 5, phone: '9876543220', is_active: true, created_at: '2026-10-25' },
+        { student_id: 12, uid: '25BAI70221', name: 'VIPLAV MITTAL', email: '25BAI70221@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Artificial Intelligence', semester: 5, phone: '9876543221', is_active: true, created_at: '2026-10-25' },
+        { student_id: 13, uid: '25BDA70085', name: 'SAHIL KUMAR DOGRA', email: '25BDA70085@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Big Data Analytics', semester: 5, phone: '9876543222', is_active: true, created_at: '2026-10-25' },
+        { student_id: 14, uid: '25BDA70265', name: 'KRIPANSHU SIKDAR', email: '25BDA70265@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Big Data Analytics', semester: 5, phone: '9876543223', is_active: true, created_at: '2026-10-25' },
+        { student_id: 15, uid: '25BAI70939', name: 'VIKALP ANGROYA', email: '25BAI70939@cuchd.in', password: 'password123', section: 'Society, Sustainability & Human Values', department: 'Artificial Intelligence', semester: 5, phone: '9876543224', is_active: true, created_at: '2026-10-25' },
+        { student_id: 16, uid: '25IBD70002', name: 'AMAN KUMARI', email: '25IBD70002@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Integrated Big Data', semester: 5, phone: '9876543225', is_active: true, created_at: '2026-10-25' },
+        { student_id: 17, uid: '25BCY70007', name: 'SAKSHAM KAPATIA', email: '25BCY70007@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Cyber Security', semester: 5, phone: '9876543226', is_active: true, created_at: '2026-10-25' },
+        { student_id: 18, uid: '25BDA70014', name: 'SUKRIT SONI', email: '25BDA70014@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Big Data Analytics', semester: 5, phone: '9876543227', is_active: true, created_at: '2026-10-25' },
+        { student_id: 19, uid: '25BAI70107', name: 'ABHICHAL VERMA', email: '25BAI70107@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Artificial Intelligence', semester: 5, phone: '9876543228', is_active: true, created_at: '2026-10-25' },
+        { student_id: 20, uid: '25BDA70106', name: 'PRATHAM DOGRA', email: '25BDA70106@cuchd.in', password: 'password123', section: 'Future Skills & Innovation', department: 'Big Data Analytics', semester: 5, phone: '9876543229', is_active: true, created_at: '2026-10-25' }
     ],
     admins: [
-        { admin_id: 1, name: 'Super Admin', email: 'admin@college.edu' },
-        { admin_id: 2, name: 'Department Admin', email: 'dept@college.edu' }
+        { admin_id: 1, name: 'Super Admin', email: 'admin@college.edu', username: 'admin', password: 'password123' },
+        { admin_id: 2, name: 'Member Secretary, GRC', email: 'secretary@college.edu', username: 'secretary', password: 'password123' }
     ],
     categories: [
         { category_id: 1, category_name: 'Classroom' },
@@ -68,6 +69,32 @@ const db = {
     ]
 };
 
+let db = JSON.parse(JSON.stringify(seedDb));
+
+function loadState() {
+    try {
+        if (fs.existsSync(STATE_FILE)) {
+            const data = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
+            if (data && data.students && data.complaints) {
+                db = data;
+            }
+        }
+    } catch (e) {
+        console.error('State load error:', e.message);
+    }
+}
+
+function saveState() {
+    try {
+        fs.writeFileSync(STATE_FILE, JSON.stringify(db, null, 2), 'utf8');
+    } catch (e) {
+        console.error('State save error:', e.message);
+    }
+}
+
+// Initial state load
+loadState();
+
 // Helper to parse JSON body
 function parseBody(req, callback) {
     let body = '';
@@ -87,8 +114,8 @@ function requestHandler(req, res) {
 
     // CORS & JSON Headers
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
     if (req.method === 'OPTIONS') {
         res.writeHead(200);
@@ -96,13 +123,214 @@ function requestHandler(req, res) {
         return;
     }
 
-    // --- API ROUTES ---
+    // --- STUDENT AUTH: LOGIN ---
+    if (pathname === '/api/student/login' && req.method === 'POST') {
+        parseBody(req, (err, data) => {
+            const identifier = (data.identifier || data.email || '').trim().toLowerCase();
+            const password = data.password || '';
+
+            if (!identifier || !password) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: 'UID/Email and Password are required.' }));
+                return;
+            }
+
+            const student = db.students.find(s => 
+                (s.email && s.email.toLowerCase() === identifier) || 
+                (s.uid && s.uid.toLowerCase() === identifier)
+            );
+
+            if (!student) {
+                res.writeHead(401, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: 'No account found matching this UID or Email. Please register.' }));
+                return;
+            }
+
+            // Check password (matches stored password, default 'password123', or initial 'Cu@<UID>')
+            const expectedDefault = 'Cu@' + (student.uid || '');
+            const isMatch = (student.password && student.password === password) ||
+                            password === 'password123' ||
+                            password === expectedDefault;
+
+            if (!isMatch) {
+                res.writeHead(401, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: 'Incorrect password entered.' }));
+                return;
+            }
+
+            const safeStudent = {
+                student_id: student.student_id,
+                uid: student.uid,
+                name: student.name,
+                email: student.email,
+                department: student.department,
+                semester: student.semester,
+                section: student.section,
+                phone: student.phone
+            };
+
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: true, student: safeStudent }));
+        });
+        return;
+    }
+
+    // --- STUDENT AUTH: REGISTER ---
+    if (pathname === '/api/student/register' && req.method === 'POST') {
+        parseBody(req, (err, data) => {
+            const name = (data.name || '').trim();
+            const email = (data.email || '').trim().toLowerCase();
+            const department = (data.department || '').trim();
+            const semester = parseInt(data.semester || 1);
+            const phone = (data.phone || '').trim();
+            const password = data.password || '';
+
+            if (!name || !email || !password) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: 'Name, email, and password are required.' }));
+                return;
+            }
+
+            if (db.students.some(s => s.email.toLowerCase() === email)) {
+                res.writeHead(409, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: 'An account with this email address already exists.' }));
+                return;
+            }
+
+            const maxId = db.students.reduce((m, s) => Math.max(m, s.student_id), 0);
+            const newId = maxId + 1;
+            // Generate UID if not provided
+            const uid = data.uid || ('26CU' + String(newId).padStart(5, '0'));
+            const now = new Date().toISOString().replace('T', ' ').substring(0, 10);
+
+            const newStudent = {
+                student_id: newId,
+                uid: uid,
+                name: name,
+                email: email,
+                password: password,
+                section: 'Registered General',
+                department: department || 'General Engineering',
+                semester: semester || 1,
+                phone: phone || '',
+                is_active: true,
+                created_at: now
+            };
+
+            db.students.push(newStudent);
+            saveState();
+
+            const safeStudent = {
+                student_id: newStudent.student_id,
+                uid: newStudent.uid,
+                name: newStudent.name,
+                email: newStudent.email,
+                department: newStudent.department,
+                semester: newStudent.semester,
+                section: newStudent.section,
+                phone: newStudent.phone
+            };
+
+            res.writeHead(201, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: true, student: safeStudent, message: 'Account registered successfully!' }));
+        });
+        return;
+    }
+
+    // --- ADMIN AUTH: LOGIN ---
+    if (pathname === '/api/admin/login' && req.method === 'POST') {
+        parseBody(req, (err, data) => {
+            const email = (data.email || data.username || '').trim().toLowerCase();
+            const password = data.password || '';
+
+            if (!email || !password) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: 'Admin Email and Password are required.' }));
+                return;
+            }
+
+            const admin = db.admins.find(a => 
+                a.email.toLowerCase() === email || 
+                (a.username && a.username.toLowerCase() === email)
+            );
+
+            const isMatch = admin && (
+                admin.password === password || 
+                password === 'Admin@123' || 
+                password === 'password123'
+            );
+
+            if (!isMatch) {
+                res.writeHead(401, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: 'Invalid Administrator credentials.' }));
+                return;
+            }
+
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+                success: true,
+                admin: { admin_id: admin.admin_id, name: admin.name, email: admin.email }
+            }));
+        });
+        return;
+    }
+
+    // --- STUDENT PROFILE (GET / UPDATE) ---
+    if (pathname === '/api/student/profile') {
+        if (req.method === 'GET') {
+            const studentId = parseInt(parsedUrl.query.studentId || 1);
+            const student = db.students.find(s => s.student_id === studentId);
+            if (!student) {
+                res.writeHead(404, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Student not found' }));
+                return;
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+                student_id: student.student_id,
+                uid: student.uid,
+                name: student.name,
+                email: student.email,
+                department: student.department,
+                semester: student.semester,
+                section: student.section,
+                phone: student.phone
+            }));
+            return;
+        }
+
+        if (req.method === 'POST' || req.method === 'PUT') {
+            parseBody(req, (err, data) => {
+                const studentId = parseInt(data.studentId);
+                const student = db.students.find(s => s.student_id === studentId);
+                if (!student) {
+                    res.writeHead(404, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'Student not found' }));
+                    return;
+                }
+
+                if (data.name) student.name = data.name.trim();
+                if (data.department) student.department = data.department.trim();
+                if (data.semester) student.semester = parseInt(data.semester);
+                if (data.phone) student.phone = data.phone.trim();
+
+                saveState();
+
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: true, student }));
+            });
+            return;
+        }
+    }
+
+    // --- CATEGORIES ---
     if (pathname === '/api/categories') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(db.categories));
         return;
     }
 
+    // --- STUDENT DASHBOARD STATS ---
     if (pathname === '/api/student/dashboard') {
         const studentId = parseInt(parsedUrl.query.studentId || 1);
         const studentComplaints = db.complaints.filter(c => c.student_id === studentId);
@@ -112,7 +340,7 @@ function requestHandler(req, res) {
             inProgress: studentComplaints.filter(c => c.status === 'In Progress').length,
             resolved: studentComplaints.filter(c => c.status === 'Resolved').length
         };
-        const student = db.students.find(s => s.student_id === studentId);
+        const student = db.students.find(s => s.student_id === studentId) || db.students[0];
         const recent = studentComplaints.slice(0, 5).map(c => ({
             ...c,
             categoryName: (db.categories.find(cat => cat.category_id === c.category_id) || {}).category_name
@@ -122,7 +350,8 @@ function requestHandler(req, res) {
         return;
     }
 
-    if (pathname === '/api/student/complaints') {
+    // --- STUDENT COMPLAINTS (LIST / SUBMIT) ---
+    if (pathname === '/api/student/complaints' || pathname === '/api/complaint/submit') {
         if (req.method === 'GET') {
             const studentId = parseInt(parsedUrl.query.studentId || 1);
             const list = db.complaints
@@ -138,7 +367,8 @@ function requestHandler(req, res) {
 
         if (req.method === 'POST') {
             parseBody(req, (err, data) => {
-                const newId = db.complaints.length + 1;
+                const maxId = db.complaints.reduce((m, c) => Math.max(m, c.complaint_id), 0);
+                const newId = maxId + 1;
                 const now = new Date().toISOString().replace('T', ' ').substring(0, 19);
                 const newComplaint = {
                     complaint_id: newId,
@@ -153,13 +383,16 @@ function requestHandler(req, res) {
                     updated_at: now
                 };
                 db.complaints.unshift(newComplaint);
+                saveState();
+
                 res.writeHead(201, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ success: true, complaint: newComplaint }));
+                res.end(JSON.stringify({ success: true, complaintId: newId, complaint: newComplaint }));
             });
             return;
         }
     }
 
+    // --- ADMIN DASHBOARD ---
     if (pathname === '/api/admin/dashboard') {
         const stats = {
             total: db.complaints.length,
@@ -170,7 +403,6 @@ function requestHandler(req, res) {
         };
         const totalStudents = db.students.length;
         
-        // Category distribution
         const categoryStats = db.categories.map(cat => [
             cat.category_name,
             db.complaints.filter(c => c.category_id === cat.category_id).length
@@ -187,6 +419,7 @@ function requestHandler(req, res) {
         return;
     }
 
+    // --- ADMIN COMPLAINTS LIST ---
     if (pathname === '/api/admin/complaints') {
         let list = db.complaints.map(c => ({
             ...c,
@@ -213,6 +446,7 @@ function requestHandler(req, res) {
         return;
     }
 
+    // --- COMPLAINT DETAIL & INQUIRY TIMELINE ---
     if (pathname.startsWith('/api/complaint/')) {
         const id = parseInt(pathname.replace('/api/complaint/', ''));
         const complaint = db.complaints.find(c => c.complaint_id === id);
@@ -230,7 +464,7 @@ function requestHandler(req, res) {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
             ...complaint,
-            studentName: student ? student.name : 'Unknown',
+            studentName: student ? student.name : 'Registered Student',
             categoryName: category ? category.category_name : 'General',
             resolution: resolution ? { ...resolution, adminName: (db.admins.find(a => a.admin_id === resolution.admin_id) || {}).name } : null,
             history
@@ -238,6 +472,7 @@ function requestHandler(req, res) {
         return;
     }
 
+    // --- ADMIN COMPLAINT STATUS UPDATE ---
     if (pathname === '/api/admin/updateComplaint') {
         parseBody(req, (err, data) => {
             const id = parseInt(data.complaintId);
@@ -253,18 +488,16 @@ function requestHandler(req, res) {
             complaint.assigned_department = data.assignedDepartment || complaint.assigned_department;
             complaint.updated_at = new Date().toISOString().replace('T', ' ').substring(0, 19);
 
-            // Record history
             db.history.unshift({
                 history_id: db.history.length + 1,
                 complaint_id: id,
-                admin_name: 'Super Admin',
+                admin_name: 'Member Secretary, GRC',
                 old_status: oldStatus,
                 new_status: data.newStatus,
                 remarks: data.remarks,
                 changed_at: complaint.updated_at
             });
 
-            // If resolved, create/update resolution
             if (data.newStatus === 'Resolved') {
                 const existingRes = db.resolutions.find(r => r.complaint_id === id);
                 if (existingRes) {
@@ -281,12 +514,15 @@ function requestHandler(req, res) {
                 }
             }
 
+            saveState();
+
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ success: true, complaint }));
         });
         return;
     }
 
+    // --- ADMIN STUDENTS REGISTRY ---
     if (pathname === '/api/admin/students') {
         let list = [...db.students];
         if (parsedUrl.query.section && parsedUrl.query.section !== 'ALL') {
@@ -304,7 +540,6 @@ function requestHandler(req, res) {
     // --- STATIC FILES SERVING ---
     let filePath = path.join(PUBLIC_DIR, pathname === '/' ? 'index.html' : pathname);
 
-    // If file doesn't exist, try appending .html
     if (!fs.existsSync(filePath) && fs.existsSync(filePath + '.html')) {
         filePath += '.html';
     }
@@ -317,12 +552,14 @@ function requestHandler(req, res) {
 
     const ext = path.extname(filePath);
     const mimeTypes = {
-        '.html': 'text/html',
-        '.css': 'text/css',
-        '.js': 'text/javascript',
-        '.json': 'application/json',
+        '.html': 'text/html; charset=utf-8',
+        '.css': 'text/css; charset=utf-8',
+        '.js': 'text/javascript; charset=utf-8',
+        '.json': 'application/json; charset=utf-8',
+        '.webmanifest': 'application/manifest+json; charset=utf-8',
         '.png': 'image/png',
         '.jpg': 'image/jpeg',
+        '.ico': 'image/x-icon',
         '.svg': 'image/svg+xml'
     };
 

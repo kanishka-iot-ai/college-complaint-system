@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,10 +21,10 @@
         <div style="display: flex; align-items: center; gap: 1rem;">
             <span style="font-size: 0.95rem; color: var(--slate); display: inline-flex; align-items: center; gap: 0.4rem;">
                 <svg class="ui-icon-sm" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                <strong>MOHAMMED TEHJIB NIZAM CHOWDHURY</strong>
-                <span class="badge badge-section-innovation">26BAI10196</span>
+                <strong id="studentHeaderName">Student</strong>
+                <span class="badge badge-section-innovation" id="studentHeaderUid">Active</span>
             </span>
-            <a href="/login.html" class="btn btn-outline btn-sm">Sign Out</a>
+            <button type="button" onclick="handleSignOut()" class="btn btn-outline btn-sm">Sign Out</button>
         </div>
     </nav>
 
@@ -35,7 +35,7 @@
                     <div class="sidebar-title">Student Portal</div>
                     <div class="sidebar-user">
                         <img src="/images/cu_logo.png?v=20261101" alt="CU Logo" class="sidebar-user-logo">
-                        <span>MOHAMMED TEHJIB NIZAM CHOWDHURY</span>
+                        <span id="sidebarStudentName">Student Profile</span>
                     </div>
                 </div>
 
@@ -132,12 +132,26 @@
 
     <script src="/js/main.js"></script>
     <script>
-        fetch('/api/student/complaints?studentId=1')
+        const studentUser = JSON.parse(localStorage.getItem('student_user') || 'null');
+        if (!studentUser) {
+            window.location.href = '/login.html';
+        } else {
+            document.getElementById('studentHeaderName').textContent = studentUser.name || 'Student';
+            document.getElementById('studentHeaderUid').textContent = studentUser.uid || studentUser.email;
+            document.getElementById('sidebarStudentName').textContent = studentUser.name || 'Student';
+        }
+
+        function handleSignOut() {
+            localStorage.removeItem('student_user');
+            window.location.href = '/login.html';
+        }
+
+        fetch('/api/student/complaints?studentId=' + (studentUser ? studentUser.student_id : 1))
             .then(res => res.json())
             .then(complaints => {
                 const tbody = document.getElementById('complaintsTableBody');
                 if (!complaints || complaints.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2.5rem; color: var(--muted);">No complaints filed yet under this student account.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2.5rem; color: var(--muted);">No complaints filed yet under your account. <a href="/submit_complaint.html" style="color: var(--primary); font-weight: 600;">Lodge a new grievance &rarr;</a></td></tr>';
                     return;
                 }
 
