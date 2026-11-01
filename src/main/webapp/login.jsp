@@ -6,9 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Portal Login - Chandigarh University</title>
-    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/images/cu_logo.png">
-    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico">
-    <link rel="apple-touch-icon" href="${pageContext.request.contextPath}/images/cu_logo.png">
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/favicon.ico?v=20261101">
+    <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/images/favicon-32x32.png?v=20261101">
+    <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/images/favicon-16x16.png?v=20261101">
+    <link rel="apple-touch-icon" sizes="180x180" href="${pageContext.request.contextPath}/images/apple-touch-icon.png?v=20261101">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body style="background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); min-height: 100vh;">
@@ -16,7 +17,7 @@
     <div class="auth-wrapper">
         <div class="auth-card">
             <div class="auth-header">
-                <img src="${pageContext.request.contextPath}/images/cu_logo.png" alt="CU Logo" class="brand-logo-card">
+                <img src="${pageContext.request.contextPath}/images/cu_logo.png?v=20261101" alt="CU Logo" class="brand-logo-card">
                 <h1>Student Redressal Portal</h1>
                 <p>Sign in with your University UID or institutional email to access grievance proceedings</p>
             </div>
