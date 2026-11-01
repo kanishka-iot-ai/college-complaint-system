@@ -109,15 +109,15 @@
                                 <label class="form-label">Urgency / Severity Level *</label>
                                 <div class="radio-group" style="padding-top: 0.5rem; display: flex; gap: 1.5rem;">
                                     <label class="radio-label">
-                                        <input type="radio" name="priority" value="Low"> 
+                                        <input type="radio" name="priority" value="Low" required> 
                                         <span class="badge badge-priority-low">Low</span>
                                     </label>
                                     <label class="radio-label">
-                                        <input type="radio" name="priority" value="Medium" checked> 
+                                        <input type="radio" name="priority" value="Medium" required> 
                                         <span class="badge badge-priority-medium">Medium</span>
                                     </label>
                                     <label class="radio-label">
-                                        <input type="radio" name="priority" value="High"> 
+                                        <input type="radio" name="priority" value="High" required> 
                                         <span class="badge badge-priority-high">High (Urgent)</span>
                                     </label>
                                 </div>
@@ -187,7 +187,12 @@
         function handleSubmitComplaint(e) {
             e.preventDefault();
             const categoryId = document.getElementById('categoryId').value;
-            const priority = document.querySelector('input[name="priority"]:checked').value;
+            const priorityInput = document.querySelector('input[name="priority"]:checked');
+            if (!priorityInput) {
+                alert('Please select an urgency / priority level.');
+                return;
+            }
+            const priority = priorityInput.value;
             const title = document.getElementById('title').value.trim();
             const description = desc.value.trim();
 
@@ -195,7 +200,7 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
-                    studentId: studentUser ? studentUser.student_id : 1, 
+                    studentId: studentUser.student_id, 
                     categoryId, 
                     priority, 
                     title, 

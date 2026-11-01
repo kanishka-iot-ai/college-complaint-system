@@ -18,7 +18,7 @@
             <div class="auth-header">
                 <img src="/images/cu_logo.png?v=20261101" alt="CU Logo" class="brand-logo-card">
                 <h1>Student Registration</h1>
-                <p>Create your official student account to lodge grievances and track Action Taken Reports (ATRs)</p>
+                <p>Register with your University UID to lodge grievances and track Action Taken Reports (ATRs)</p>
             </div>
 
             <div id="alertBox"></div>
@@ -26,13 +26,31 @@
             <form id="regForm" onsubmit="handleRegister(event)">
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label" for="name">Full Name *</label>
-                        <input type="text" id="name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+                        <label class="form-label" for="uid">University UID *</label>
+                        <input type="text" id="uid" class="form-control" placeholder="e.g. 26BAI10196" required autofocus style="text-transform: uppercase;">
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="email">College Email Address *</label>
-                        <input type="email" id="email" class="form-control" placeholder="e.g. rahul@student.cuchd.in" required>
+                        <label class="form-label" for="name">Full Name *</label>
+                        <input type="text" id="name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="email">Institutional Email Address *</label>
+                        <input type="email" id="email" class="form-control" placeholder="e.g. 26BAI10196@cuchd.in" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="section">Academic Cluster / Section *</label>
+                        <select id="section" class="form-control" required>
+                            <option value="">-- Select Section / Cluster --</option>
+                            <option value="Future Skills & Innovation">Future Skills &amp; Innovation</option>
+                            <option value="Society, Sustainability & Human Values">Society, Sustainability &amp; Human Values</option>
+                            <option value="Core Engineering">Core Engineering</option>
+                            <option value="General">General Academic</option>
+                        </select>
                     </div>
                 </div>
 
@@ -105,8 +123,10 @@
     <script>
         function handleRegister(e) {
             e.preventDefault();
+            const uid = document.getElementById('uid').value.trim().toUpperCase();
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
+            const section = document.getElementById('section').value;
             const department = document.getElementById('department').value;
             const semester = document.getElementById('semester').value;
             const phone = document.getElementById('phone').value.trim();
@@ -116,6 +136,11 @@
             const regBtn = document.getElementById('regBtn');
 
             alertBox.innerHTML = '';
+
+            if (!uid) {
+                alertBox.innerHTML = '<div class="alert alert-danger" style="margin-bottom: 1.25rem;">University UID is mandatory. Please enter your student UID.</div>';
+                return;
+            }
 
             if (password !== confirmPassword) {
                 alertBox.innerHTML = '<div class="alert alert-danger" style="margin-bottom: 1.25rem;">Passwords do not match. Please re-enter.</div>';
@@ -128,7 +153,7 @@
             fetch('/api/student/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, department, semester, phone, password })
+                body: JSON.stringify({ uid, name, email, section, department, semester, phone, password })
             })
             .then(res => res.json().then(data => ({ status: res.status, body: data })))
             .then(({ status, body }) => {
@@ -137,7 +162,7 @@
 
                 if ((status === 200 || status === 201) && body.success) {
                     localStorage.setItem('student_user', JSON.stringify(body.student));
-                    alertBox.innerHTML = '<div class="alert alert-success" style="margin-bottom: 1.25rem;">Registration completed successfully! Entering your dashboard...</div>';
+                    alertBox.innerHTML = '<div class="alert alert-success" style="margin-bottom: 1.25rem;">Registration completed successfully for UID ' + body.student.uid + '! Entering dashboard...</div>';
                     setTimeout(() => {
                         window.location.href = '/student_dashboard.html';
                     }, 1000);

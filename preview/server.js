@@ -178,29 +178,41 @@ function requestHandler(req, res) {
     // --- STUDENT AUTH: REGISTER ---
     if (pathname === '/api/student/register' && req.method === 'POST') {
         parseBody(req, (err, data) => {
+            const uid = (data.uid || '').trim().toUpperCase();
             const name = (data.name || '').trim();
             const email = (data.email || '').trim().toLowerCase();
             const department = (data.department || '').trim();
-            const semester = parseInt(data.semester || 1);
+            const section = (data.section || '').trim();
+            const semester = parseInt(data.semester);
             const phone = (data.phone || '').trim();
             const password = data.password || '';
 
-            if (!name || !email || !password) {
+            if (!uid) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ success: false, error: 'Name, email, and password are required.' }));
+                res.end(JSON.stringify({ success: false, error: 'University UID is mandatory. Please enter your institutional UID.' }));
+                return;
+            }
+
+            if (!name || !email || !department || !semester || !phone || !password) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: 'All fields are mandatory. Please complete all required details.' }));
+                return;
+            }
+
+            if (db.students.some(s => s.uid && s.uid.toLowerCase() === uid.toLowerCase())) {
+                res.writeHead(409, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: 'A student with University UID "' + uid + '" is already registered. Please sign in.' }));
                 return;
             }
 
             if (db.students.some(s => s.email.toLowerCase() === email)) {
                 res.writeHead(409, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ success: false, error: 'An account with this email address already exists.' }));
+                res.end(JSON.stringify({ success: false, error: 'An account with email "' + email + '" is already registered.' }));
                 return;
             }
 
             const maxId = db.students.reduce((m, s) => Math.max(m, s.student_id), 0);
             const newId = maxId + 1;
-            // Generate UID if not provided
-            const uid = data.uid || ('26CU' + String(newId).padStart(5, '0'));
             const now = new Date().toISOString().replace('T', ' ').substring(0, 10);
 
             const newStudent = {
@@ -209,10 +221,10 @@ function requestHandler(req, res) {
                 name: name,
                 email: email,
                 password: password,
-                section: 'Registered General',
-                department: department || 'General Engineering',
-                semester: semester || 1,
-                phone: phone || '',
+                section: section || 'General',
+                department: department,
+                semester: semester,
+                phone: phone,
                 is_active: true,
                 created_at: now
             };

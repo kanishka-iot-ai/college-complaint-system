@@ -272,6 +272,19 @@
       "phone": "9876543200",
       "is_active": true,
       "created_at": "2026-11-01"
+    },
+    {
+      "student_id": 22,
+      "uid": "26BAI43247",
+      "name": "Kanishka Giri",
+      "email": "26bai43247@cuchd.in",
+      "password": "SecurePassword2026!",
+      "section": "Future Skills & Innovation",
+      "department": "Artificial Intelligence",
+      "semester": 4,
+      "phone": "9876543299",
+      "is_active": true,
+      "created_at": "2026-11-01"
     }
   ],
   "admins": [
@@ -337,6 +350,18 @@
     }
   ],
   "complaints": [
+    {
+      "complaint_id": 10,
+      "student_id": 22,
+      "category_id": 8,
+      "title": "5G Wi-Fi drop in Block-A",
+      "description": "High packet loss observed during lab practical hours.",
+      "priority": "High",
+      "status": "Submitted",
+      "assigned_department": null,
+      "created_at": "2026-11-01 08:52:50",
+      "updated_at": "2026-11-01 08:52:50"
+    },
     {
       "complaint_id": 9,
       "student_id": 21,
