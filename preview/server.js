@@ -73,10 +73,19 @@ let db = JSON.parse(JSON.stringify(seedDb));
 
 function loadState() {
     try {
-        if (fs.existsSync(STATE_FILE)) {
-            const data = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
-            if (data && data.students && data.complaints) {
-                db = data;
+        const candidates = [
+            STATE_FILE,
+            path.join(__dirname, 'db_data.json'),
+            path.join(process.cwd(), 'CollegeComplaintSystem', 'preview', 'db_data.json'),
+            path.join(process.cwd(), 'preview', 'db_data.json')
+        ];
+        for (const f of candidates) {
+            if (fs.existsSync(f)) {
+                const data = JSON.parse(fs.readFileSync(f, 'utf8'));
+                if (data && Array.isArray(data.students) && data.students.length >= db.students.length) {
+                    db = data;
+                    break;
+                }
             }
         }
     } catch (e) {
@@ -135,10 +144,37 @@ function requestHandler(req, res) {
                 return;
             }
 
-            const student = db.students.find(s => 
+            let student = db.students.find(s => 
                 (s.email && s.email.toLowerCase() === identifier) || 
                 (s.uid && s.uid.toLowerCase() === identifier)
             );
+
+            // Resilient Client Re-Hydration fallback if server cold-started
+            if (!student && data.localAccount) {
+                const loc = data.localAccount;
+                const locUid = (loc.uid || '').toLowerCase();
+                const locEmail = (loc.email || '').toLowerCase();
+                if (locUid === identifier || locEmail === identifier) {
+                    if (loc.password === password) {
+                        const maxId = db.students.reduce((m, s) => Math.max(m, s.student_id), 0);
+                        student = {
+                            student_id: loc.student_id || (maxId + 1),
+                            uid: loc.uid,
+                            name: loc.name,
+                            email: loc.email,
+                            password: loc.password,
+                            department: loc.department,
+                            semester: loc.semester,
+                            section: loc.section || 'General',
+                            phone: loc.phone || '',
+                            is_active: true,
+                            created_at: loc.created_at || new Date().toISOString().substring(0, 10)
+                        };
+                        db.students.push(student);
+                        saveState();
+                    }
+                }
+            }
 
             if (!student) {
                 res.writeHead(401, { 'Content-Type': 'application/json' });
@@ -171,6 +207,45 @@ function requestHandler(req, res) {
 
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ success: true, student: safeStudent }));
+        });
+        return;
+    }
+
+    // --- STUDENT SYNC (PERSISTENCE RE-HYDRATION) ---
+    if (pathname === '/api/student/sync' && req.method === 'POST') {
+        parseBody(req, (err, data) => {
+            const student = data.student;
+            if (!student || !student.uid) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: false, error: 'Student data required.' }));
+                return;
+            }
+
+            const existingIdx = db.students.findIndex(s => 
+                (s.uid && s.uid.toLowerCase() === student.uid.toLowerCase()) ||
+                (s.email && s.email.toLowerCase() === (student.email || '').toLowerCase())
+            );
+
+            if (existingIdx >= 0) {
+                db.students[existingIdx] = { ...db.students[existingIdx], ...student };
+            } else {
+                const maxId = db.students.reduce((m, s) => Math.max(m, s.student_id), 0);
+                student.student_id = student.student_id || (maxId + 1);
+                db.students.push(student);
+            }
+
+            if (Array.isArray(data.complaints)) {
+                data.complaints.forEach(c => {
+                    if (!db.complaints.some(dc => dc.complaint_id === c.complaint_id)) {
+                        db.complaints.unshift(c);
+                    }
+                });
+            }
+
+            saveState();
+
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: true, student_id: student.student_id, count: db.students.length }));
         });
         return;
     }

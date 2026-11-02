@@ -22,6 +22,19 @@
                 <p>Authorized Grievance Redressal Committee Personnel Only</p>
             </div>
 
+            <!-- Active Admin Session Prompt -->
+            <div id="activeAdminCard" style="display: none; background: #f0fdfa; border: 1px solid #99f6e4; border-radius: var(--radius-sm); padding: 1rem; margin-bottom: 1.25rem;">
+                <div style="font-weight: 600; color: #115e59; display: flex; align-items: center; justify-content: space-between;">
+                    <span>Signed in as <strong id="activeAdminName"></strong></span>
+                    <span class="badge" style="background: #ccfbf1; color: #0f766e;">Admin Session</span>
+                </div>
+                <p style="font-size: 0.85rem; color: #0f766e; margin: 0.35rem 0 0.75rem 0;">You have an active administrative session on this browser.</p>
+                <div style="display: flex; gap: 0.5rem;">
+                    <a href="/admin_dashboard.html" class="btn btn-primary btn-sm" style="flex: 1; text-align: center; text-decoration: none; padding: 0.5rem; background: #0d9488; border-color: #0d9488;">Continue to Admin Console &rarr;</a>
+                    <button type="button" onclick="clearAdminSession()" class="btn btn-outline btn-sm" style="color: #64748b; padding: 0.5rem;">Switch Account</button>
+                </div>
+            </div>
+
             <div id="alertBox"></div>
 
             <form onsubmit="handleAdminLogin(event)">
@@ -35,7 +48,14 @@
                     <input type="password" id="password" class="form-control" placeholder="Enter security password" required>
                 </div>
 
-                <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.85rem; background: #0d9488; border-color: #0d9488;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: -0.25rem; margin-bottom: 0.75rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #94a3b8; cursor: pointer;">
+                        <input type="checkbox" id="rememberAdmin" checked style="accent-color: #0d9488; width: 16px; height: 16px;">
+                        <span>Remember credentials on this browser</span>
+                    </label>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem; padding: 0.85rem; background: #0d9488; border-color: #0d9488;">
                     Enter Admin Console &rarr;
                 </button>
             </form>
@@ -54,10 +74,32 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const activeAdmin = JSON.parse(localStorage.getItem('admin_user') || 'null');
+            if (activeAdmin && activeAdmin.name) {
+                document.getElementById('activeAdminName').textContent = activeAdmin.name;
+                document.getElementById('activeAdminCard').style.display = 'block';
+            }
+
+            const rememberedAdmin = localStorage.getItem('remembered_admin_email');
+            if (rememberedAdmin) {
+                document.getElementById('email').value = rememberedAdmin;
+                document.getElementById('rememberAdmin').checked = true;
+                const pwd = document.getElementById('password');
+                if (pwd) pwd.focus();
+            }
+        });
+
+        function clearAdminSession() {
+            localStorage.removeItem('admin_user');
+            document.getElementById('activeAdminCard').style.display = 'none';
+        }
+
         function handleAdminLogin(e) {
             e.preventDefault();
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
+            const rememberAdmin = document.getElementById('rememberAdmin').checked;
             const alertBox = document.getElementById('alertBox');
             const submitBtn = document.getElementById('submitBtn');
 
@@ -77,6 +119,11 @@
 
                 if (status === 200 && body.success) {
                     localStorage.setItem('admin_user', JSON.stringify(body.admin));
+                    if (rememberAdmin) {
+                        localStorage.setItem('remembered_admin_email', email);
+                    } else {
+                        localStorage.removeItem('remembered_admin_email');
+                    }
                     window.location.href = '/admin_dashboard.html';
                 } else {
                     alertBox.innerHTML = '<div class="alert alert-danger" style="margin-bottom: 1.25rem;">' + (body.error || 'Invalid administrator credentials.') + '</div>';

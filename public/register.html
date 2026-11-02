@@ -161,7 +161,16 @@
                 regBtn.innerHTML = 'Complete Registration &rarr;';
 
                 if ((status === 200 || status === 201) && body.success) {
+                    // Permanently store student credentials on this browser
+                    const registeredStore = JSON.parse(localStorage.getItem('registered_students') || '{}');
+                    registeredStore[body.student.uid.toUpperCase()] = { ...body.student, password };
+                    if (body.student.email) {
+                        registeredStore[body.student.email.toLowerCase()] = { ...body.student, password };
+                    }
+                    localStorage.setItem('registered_students', JSON.stringify(registeredStore));
+                    localStorage.setItem('remembered_uid', body.student.uid.toUpperCase());
                     localStorage.setItem('student_user', JSON.stringify(body.student));
+
                     alertBox.innerHTML = '<div class="alert alert-success" style="margin-bottom: 1.25rem;">Registration completed successfully for UID ' + body.student.uid + '! Entering dashboard...</div>';
                     setTimeout(() => {
                         window.location.href = '/student_dashboard.html';
